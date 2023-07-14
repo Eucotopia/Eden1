@@ -1,1 +1,9 @@
-
+spring:
+  datasource:
+    username: root
+    password: lw001208
+    url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+  security:
+    user:
+      name: 123
+      password: 123

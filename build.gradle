@@ -25,6 +25,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.alibaba:fastjson:2.0.28'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
