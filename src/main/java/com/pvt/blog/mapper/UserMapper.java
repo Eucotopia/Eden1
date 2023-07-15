@@ -1,12 +1,21 @@
 package com.pvt.blog.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pvt.blog.pojo.User;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * @author LW
  */
-@Mapper
-public interface UserMapper extends BaseMapper<User> {
+@Repository
+public interface UserMapper extends JpaRepository<User,Long> {
+    User findByUsername(String username);
+
+    Boolean existsByEmail(String email);
+
+    Optional<User> findByUsernameOrEmail(String username, String email);
+
+    boolean existsByUsername(String username);
 }

@@ -7,7 +7,7 @@ import lombok.Data;
  * @author LW
  */
 @Data
-public class ResultUtil<T> {
+public class ResultResponse<T> {
     /**
      * 状态码
      */
@@ -21,21 +21,22 @@ public class ResultUtil<T> {
      */
     private T data;
 
-    public ResultUtil(ResultEnum resultEnum, T data) {
+    public ResultResponse(ResultEnum resultEnum, T data) {
         this(resultEnum);
         this.data = data;
     }
 
-    public ResultUtil(ResultEnum resultEnum) {
+    public ResultResponse(ResultEnum resultEnum) {
         this.code = resultEnum.getCode();
         this.message = resultEnum.getMessage();
     }
 
-    public static <T> ResultUtil<T> success(ResultEnum resultEnum, T data) {
-        return new ResultUtil<>(resultEnum, data);
+    public static <T> ResultResponse<T> success(ResultEnum resultEnum, T data) {
+        return new ResultResponse<>(resultEnum, data);
     }
 
-    public static <T> ResultUtil<T> fail(ResultEnum resultEnum) {
-        return new ResultUtil<>(resultEnum);
+    public static <T> ResultResponse<T> fail(ResultEnum resultEnum) {
+        return new ResultResponse<>(resultEnum);
     }
+
 }

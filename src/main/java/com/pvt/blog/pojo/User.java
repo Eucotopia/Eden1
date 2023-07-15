@@ -1,31 +1,33 @@
 package com.pvt.blog.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import org.springframework.cglib.core.Local;
 
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import lombok.Data;
+
 import java.time.LocalDateTime;
+import java.util.Set;
 
 /**
  * 用户
  *
  * @author LW
  */
-@TableName("b_user")
+@Table(name = "b_user")
 @Data
+@Entity
 public class User {
     /**
      * 用户 id
      */
-    @TableId("id")
+    @Id
     private Integer id;
     /**
      * 用户名
      */
-    private String userName;
+    private String username;
     /**
      * 密码
      */
@@ -33,7 +35,7 @@ public class User {
     /**
      * 昵称
      */
-    private String nickName;
+    private String nickname;
     /**
      * 创建时间
      */
@@ -58,4 +60,9 @@ public class User {
      * 头像地址
      */
     private String cover;
+    /**
+     * 角色
+     */
+    @Transient
+    private Set<Role> roles;
 }
