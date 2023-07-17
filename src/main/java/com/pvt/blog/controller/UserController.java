@@ -1,6 +1,7 @@
 package com.pvt.blog.controller;
 
 import com.pvt.blog.pojo.dto.LoginDto;
+import com.pvt.blog.pojo.dto.SignUpDto;
 import com.pvt.blog.service.IUserService;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -19,16 +20,11 @@ public class UserController {
     // 用户登录
     @PostMapping("/login")
     public ResultResponse<String> userLogin(@RequestBody LoginDto loginDto){
-        log.info(loginDto.toString());
         return userService.userLogin(loginDto);
     }
-    @GetMapping("/ok")
-    public String OK(){
-        return "OK";
-    }
-
-    @PostMapping("/qwe")
-    public String userLogin(String username){
-        return username;
+    // 用户注册
+    @PostMapping("/register")
+    public ResultResponse<String> userRegister(@RequestBody SignUpDto signUpDto){
+        return userService.userRegister(signUpDto);
     }
 }

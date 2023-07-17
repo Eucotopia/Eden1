@@ -4,6 +4,7 @@ package com.pvt.blog.pojo;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -15,7 +16,9 @@ import java.util.Set;
 @Table(name = "b_user")
 @Data
 @Entity
-public class User {
+public class User implements Serializable {
+    @Transient
+    public static final Long serialVersionUID = -6849794470754667710L;
     /**
      * 用户 id
      */

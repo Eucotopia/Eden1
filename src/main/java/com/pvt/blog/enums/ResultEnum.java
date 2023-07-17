@@ -4,7 +4,8 @@ package com.pvt.blog.enums;
  * @author LW
  */
 public enum ResultEnum {
-    SUCCESS(200, "成功");
+    SUCCESS(200, "成功"),
+    FAIL_USER_EXIST(409,"用户已存在！");
     /**
      * 状态码
      */
