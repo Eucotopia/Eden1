@@ -4,9 +4,3 @@ spring:
     username: root
     password: lw001208
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-  # spring security
-  security:
-    user:
-      name: 123
-      password: 123
-      roles: ADMIN

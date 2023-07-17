@@ -1,6 +1,7 @@
 package com.pvt.blog.filter;
 
 import com.pvt.blog.util.JwtTokenProvider;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,6 +23,7 @@ import java.io.IOException;
  * @date 2023/7/15
  * @description
  */
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Resource
     protected JwtTokenProvider jwtTokenProvider;
@@ -28,16 +31,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
+
         // get token from http request
-        String token = getTokenFromRequest(request);
+        String authorization = request.getHeader("Authorization");
+
         // validate token
-        if (StringUtils.hasText(token) && jwtTokenProvider.validateToken(token)) {
+        if (StringUtils.hasText(authorization) && jwtTokenProvider.validateToken(authorization)) {
 
             // get username from token
-            String username = jwtTokenProvider.getUsername(token);
+            String username = jwtTokenProvider.getUsername(authorization);
 
             // load the user associated with token
+            // TODO 这里需要修改，应该是从 Redis 中读取该数据（需要考虑这里是否一定可以获取到该对象，如果是的话，那就在 Redis 中查询，如果不是那就读取 loadUserByUsername）
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -52,14 +58,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request){
-
-        String bearerToken = request.getHeader("Authorization");
-
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7, bearerToken.length());
-        }
-
-        return null;
-    }
 }

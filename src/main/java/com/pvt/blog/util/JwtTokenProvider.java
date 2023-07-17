@@ -18,13 +18,13 @@ import java.util.Date;
 @Component
 @Slf4j
 public class JwtTokenProvider {
-    public static final String jwtSecret= "daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb";
-    public static final Long jwtExpirationDate = 604800000L;
+    public static final String JWT_SECRET = "daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb";
+    public static final Long JWT_EXPIRATION_DATE = 604800000L;
     // generate JWT token
     public String generateToken(Authentication authentication){
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date  expireDate = new Date(currentDate.getTime()+jwtExpirationDate);
+        Date  expireDate = new Date(currentDate.getTime()+JWT_EXPIRATION_DATE);
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
@@ -34,7 +34,7 @@ public class JwtTokenProvider {
     }
     private Key key(){
         return Keys.hmacShaKeyFor(
-                Decoders.BASE64.decode(jwtSecret)
+                Decoders.BASE64.decode(JWT_SECRET)
         );
     }
     // get username from Jwt token

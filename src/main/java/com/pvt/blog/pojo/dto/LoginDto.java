@@ -8,7 +8,7 @@ import lombok.Data;
  * @description 从前端接受的 User 对象
  */
 @Data
-public class UserDto {
+public class LoginDto {
     private String username;
     private String password;
     private String code;

@@ -1,7 +1,5 @@
 package com.pvt.blog.enums;
 
-import lombok.Data;
-
 /**
  * @author LW
  */

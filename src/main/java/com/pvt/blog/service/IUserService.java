@@ -1,6 +1,7 @@
 package com.pvt.blog.service;
 
-import com.pvt.blog.pojo.dto.UserDto;
+import com.pvt.blog.pojo.dto.LoginDto;
+import com.pvt.blog.pojo.dto.SignUpDto;
 import com.pvt.blog.util.ResultResponse;
 import org.springframework.stereotype.Service;
 
@@ -9,5 +10,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface IUserService {
-    ResultResponse<String> userLogin(UserDto userDto);
+    ResultResponse<String> userLogin(LoginDto loginDto);
+
+    ResultResponse<String> userRegister(SignUpDto signUpDto);
+
 }

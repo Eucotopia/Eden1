@@ -1,7 +1,7 @@
 package com.pvt.blog.pojo;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 /**
  * @author LW
@@ -9,8 +9,11 @@ import org.springframework.data.annotation.Id;
  * @description 角色
  */
 @Data
+@Entity
+@Table(name = "b_role")
 public class Role {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 }
