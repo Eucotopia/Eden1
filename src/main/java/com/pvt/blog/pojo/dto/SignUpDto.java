@@ -16,5 +16,4 @@ public class SignUpDto implements Serializable {
     public static final Long serialVersionUID = -6849794470754667760L;
     private String username;
     private String password;
-    private String nickname;
 }

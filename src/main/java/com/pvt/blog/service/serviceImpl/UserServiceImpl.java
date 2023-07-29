@@ -1,5 +1,6 @@
 package com.pvt.blog.service.serviceImpl;
 
+import cn.hutool.core.lang.Validator;
 import com.pvt.blog.common.RoleConstant;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.mapper.RoleRepository;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -54,31 +56,39 @@ public class UserServiceImpl implements IUserService {
 
         String token = jwtTokenProvider.generateToken(authentication);
 
-        // TODO 登录成功后，将对象存入 redis 中
-        // JSON parse = JSONUtil.parse(loginDto);
-        // redisTemplate.opsForValue().setIfAbsent(loginDto.getUsername(),parse, RedisConstant.USER_TTL, TimeUnit.HOURS);
-        // Object o = redisTemplate.opsForValue().get(loginDto.getUsername());
-        // JSONUtil.toBean(o,LoginDto.class);
+        /*
+         TODO 登录成功后，将对象存入 redis 中
+         JSON parse = JSONUtil.parse(loginDto);
+         redisTemplate.opsForValue().setIfAbsent(loginDto.getUsername(),parse, RedisConstant.USER_TTL, TimeUnit.HOURS);
+         Object o = redisTemplate.opsForValue().get(loginDto.getUsername());
+         JSONUtil.toBean(o,LoginDto.class);
+        */
         log.info("token:" + token);
-        return new ResultResponse<>(ResultEnum.SUCCESS, token);
+        return new ResultResponse<>(ResultEnum.SUCCESS_USER_REGISTER, token);
     }
 
+    /*
+        1. 判断用户输入的用户名是否为邮箱
+        2. 检查数据库中是否存在该用户（用户名重复）
+        3. 创建该用户并保存进数据库
+     */
     @Override
     public ResultResponse<String> userRegister(SignUpDto signUpDto) {
-        // 检查数据库中是否存在该用户
+        if (!Validator.isEmail(signUpDto.getUsername())) {
+            // email 格式不正确
+            return new ResultResponse<>(ResultEnum.FAIL_EMEAIL_FORMAT);
+        }
         if (userRepository.existsUserByUsername(signUpDto.getUsername())) {
+            // 注册的用户已存在
             return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
         }
         User user = new User();
-        user.setNickname(signUpDto.getNickname());
         user.setPassword(new BCryptPasswordEncoder().encode(signUpDto.getPassword()));
         user.setUsername(signUpDto.getUsername());
-        user.setState(0);
-        // TODO 未完
-        Optional<Role> role = roleRepository.findByName(RoleConstant.ADMIN);
+        Optional<Role> role = roleRepository.findByName(RoleConstant.GEUST);
         // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
         user.setRoles(Collections.singleton(role.orElse(null)));
         userRepository.save(user);
-        return new ResultResponse<>(ResultEnum.SUCCESS);
+        return new ResultResponse<>(ResultEnum.SUCCESS_USER_REGISTER);
     }
 }

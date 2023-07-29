@@ -4,6 +4,7 @@ import com.pvt.blog.filter.JwtAuthenticationFilter;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @description
  */
 @Configuration
+@EnableJpaAuditing
 @EnableMethodSecurity
 public class SecurityConfig {
     @Resource
@@ -37,8 +39,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/user/login").permitAll()
                             .requestMatchers("/user/register").permitAll()
-                            .requestMatchers("/user/ok").anonymous()
-                            .requestMatchers("/user/ww").anonymous()
                             .anyRequest().authenticated();
                 });
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

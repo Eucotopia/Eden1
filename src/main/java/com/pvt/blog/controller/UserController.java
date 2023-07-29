@@ -27,12 +27,4 @@ public class UserController {
     public ResultResponse<String> userRegister(@RequestBody SignUpDto signUpDto){
         return userService.userRegister(signUpDto);
     }
-    @GetMapping("/ok")
-    public String FF(){
-        return "asdf";
-    }
-    @GetMapping("/ww")
-    public String aa(){
-        return "ss";
-    }
 }

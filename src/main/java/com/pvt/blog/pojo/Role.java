@@ -17,7 +17,9 @@ public class Role implements Serializable {
     @Transient
     public static final Long serialVersionUID = -6849794470754623710L;
     @Id
+    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long role_id;
+    @Column(name = "role_name")
     private String name;
 }
