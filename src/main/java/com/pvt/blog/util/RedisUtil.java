@@ -1,5 +1,6 @@
 package com.pvt.blog.util;
 
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
@@ -10,10 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author liwei
+ */
 @Component
 public class RedisUtil
 {
-    @Autowired
+    @Resource
     public RedisTemplate redisTemplate;
 
     /**

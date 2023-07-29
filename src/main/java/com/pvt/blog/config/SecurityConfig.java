@@ -24,9 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder ();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
@@ -36,6 +37,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/user/login").permitAll()
                             .requestMatchers("/user/register").permitAll()
+                            .requestMatchers("/user/ok").anonymous()
+                            .requestMatchers("/user/ww").anonymous()
                             .anyRequest().authenticated();
                 });
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
