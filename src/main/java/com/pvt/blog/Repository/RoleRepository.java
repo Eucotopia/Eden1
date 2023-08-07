@@ -1,4 +1,4 @@
-package com.pvt.blog.mapper;
+package com.pvt.blog.Repository;
 
 import com.pvt.blog.pojo.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

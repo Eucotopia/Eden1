@@ -1,10 +1,11 @@
 package com.pvt.blog.service.serviceImpl;
 
 import cn.hutool.core.lang.Validator;
+import com.pvt.blog.Repository.RoleRepository;
+import com.pvt.blog.Repository.UserRepository;
 import com.pvt.blog.common.RoleConstant;
 import com.pvt.blog.enums.ResultEnum;
-import com.pvt.blog.mapper.RoleRepository;
-import com.pvt.blog.mapper.UserRepository;
+
 import com.pvt.blog.pojo.Role;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.LoginDto;
@@ -21,9 +22,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,6 +45,7 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private RoleRepository roleRepository;
+
 
     @Override
     public ResultResponse<String> userLogin(LoginDto loginDto) {
@@ -90,5 +92,20 @@ public class UserServiceImpl implements IUserService {
         user.setRoles(Collections.singleton(role.orElse(null)));
         userRepository.save(user);
         return new ResultResponse<>(ResultEnum.SUCCESS_USER_REGISTER);
+    }
+
+    /*
+        获取所有用户
+     */
+    @Override
+    public ResultResponse<List<User>> getAllUser() {
+        List<User> userList = userRepository.findAll();
+        return new ResultResponse<>(ResultEnum.SUCCESS, userList);
+    }
+
+    @Override
+    public ResultResponse<User> getUserById(String id) throws Exception {
+        User user = userRepository.findByUserId(Integer.valueOf(id)).orElseThrow(() -> new Exception("用户ID:" + id + "找不到"));
+        return ResultResponse.success(ResultEnum.SUCCESS,user);
     }
 }

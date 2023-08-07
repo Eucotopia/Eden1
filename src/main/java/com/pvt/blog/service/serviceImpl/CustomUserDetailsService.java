@@ -1,6 +1,6 @@
 package com.pvt.blog.service.serviceImpl;
 
-import com.pvt.blog.mapper.UserRepository;
+import com.pvt.blog.Repository.UserRepository;
 import com.pvt.blog.pojo.User;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

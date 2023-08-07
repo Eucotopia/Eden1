@@ -1,13 +1,14 @@
 spring:
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
-  # 数据库
-  datasource:
-    username: root
-    password: lw001208
-    url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-  data:
-    redis:
-      host: 127.0.0.1
-      port: 6379
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    # 数据库
+    datasource:
+        username: root
+        password: lw001208
+        url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    data:
+        redis:
+            host: 127.0.0.1
+            port: 6379
+            

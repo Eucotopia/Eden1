@@ -1,12 +1,4 @@
 {
     "configurations": [
-        {
-            "name": "blog [:bootRun]",
-            "type": "gradle",
-            "workingDir": "$PROJECT_DIR$",
-            "tasks": [":bootRun"],
-            "args": [""],
-            "initScripts": {"flmapper":"ext.mapPath = { path -> null }"},
-        },
     ]
 }

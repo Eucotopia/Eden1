@@ -1,5 +1,6 @@
 package com.pvt.blog.controller;
 
+import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.LoginDto;
 import com.pvt.blog.pojo.dto.SignUpDto;
 import com.pvt.blog.service.IUserService;
@@ -7,6 +8,8 @@ import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author LW
@@ -26,5 +29,20 @@ public class UserController {
     @PostMapping("/register")
     public ResultResponse<String> userRegister(@RequestBody SignUpDto signUpDto){
         return userService.userRegister(signUpDto);
+    }
+    // 获取所有用户
+    @GetMapping
+    public ResultResponse<List<User>> getAllUser(){
+        return userService.getAllUser();
+    }
+
+    // 根据 id 获取用户
+    @GetMapping("/{id}")
+    public ResultResponse<User> getUserById(@PathVariable String id) throws Exception {
+        return userService.getUserById(id);
+    }
+    @GetMapping("/ok")
+    public String ok(){
+        return "OK";
     }
 }
