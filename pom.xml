@@ -12,7 +12,7 @@
     <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>blog</name>
-    <description>专注于生活的个人博客</description>
+    <description>blog</description>
     <properties>
         <java.version>20</java.version>
     </properties>
@@ -95,6 +95,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
