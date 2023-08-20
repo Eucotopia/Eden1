@@ -7,10 +7,23 @@ import lombok.Getter;
  */
 @Getter
 public enum ResultEnum {
+    /**
+     * 成功
+     */
     SUCCESS(200, "成功"),
+    /**
+     * 用户注册成功
+     */
     SUCCESS_USER_REGISTER(201, "用户注册成功!!!"),
+    /**
+     * 用户名已存在
+     */
     FAIL_USER_EXIST(409, "用户已存在!!!"),
-    FAIL_EMEAIL_FORMAT(410, "邮箱格式错误!!!");
+    /**
+     * 邮箱格式错误
+     */
+    FAIL_EMAIL_FORMAT(410, "邮箱格式错误!!!");
+
     /**
      * 状态码
      */
