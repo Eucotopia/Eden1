@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
     public ResultResponse<String> userLogin(User user) {
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                user.getUsername(), user.getPassword()));
+                user.getEmail(), user.getPassword()));
 
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -61,7 +61,7 @@ public class UserServiceImpl implements IUserService {
          JSONUtil.toBean(o,LoginDto.class);
         */
         log.info("token:" + token);
-        return new ResultResponse<>(ResultEnum.SUCCESS_USER_REGISTER, token);
+        return ResultResponse.success(ResultEnum.SUCCESS,token);
     }
 
     /*
