@@ -12,14 +12,17 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "b_role")
+@Table(name = "roles")
 public class Role implements Serializable {
     @Transient
     public static final Long serialVersionUID = -6849794470754623710L;
     @Id
-    @Column(name = "role_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long role_id;
-    @Column(name = "role_name")
+    private Long id;
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 }

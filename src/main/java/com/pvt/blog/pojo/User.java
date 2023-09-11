@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @author LW
  */
-@Table(name = "b_user")
+@Table(name = "users")
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -29,9 +29,9 @@ public class User implements Serializable {
      * strategy 表示主键生成策略
      */
     @Id
-    @Column(name = "user_id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Integer id;
 
     /**
      * 用户名
@@ -49,57 +49,34 @@ public class User implements Serializable {
      * 创建时间
      */
     @CreatedDate
-    @Column(name = "create_time")
-    private Date createTime;
+    @Column(name = "registration_date")
+    private Date registrationDate;
 
-    /**
-     * 性别
-     */
-    @Column(name = "gender",columnDefinition = "int default 0")
-    private Integer gender;
+    @Column(name="email")
+    private String email;
 
-    /**
-     * 手机号
-     */
-    @Column(name="phone")
-    private String phone;
-    /**
-     * 账号状态
-     */
-    @Column(name = "state",columnDefinition = "int default 0")
-    private Integer state;
 
     /**
      * 用户简介
      */
-    @Column(name = "biography")
+    @Column(name = "bio")
     private String biography;
 
-    /**
-     * 最后一次登陆的时间
-     */
-    @Column(name = "login_time")
-    private LocalDateTime lastLoginTime;
 
     /**
      * 头像地址
      */
-    @Column(name = "avatar")
-    private String avatar;
+    @Column(name = "profile_image")
+    private String profileImage;
 
-    /**
-     * 最后一次登陆的 ip 地址
-     */
-    @Column(name = "ip_address")
-    private String ip_address;
 
     /**
      * 角色
      */
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity = Role.class)
-    @JoinTable(name = "b_user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<Role> roles;
 }

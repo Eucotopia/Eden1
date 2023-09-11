@@ -7,5 +7,5 @@ package com.pvt.blog.common;
  */
 public class RoleConstant {
     public static final String ADMIN = "ADMIN";
-    public static final String GEUST = "GUEST";
+    public static final String GUEST = "GUEST";
 }

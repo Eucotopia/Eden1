@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.hasText(authorization) && jwtTokenProvider.validateToken(authorization)) {
 
             // get username from token
-            String username = jwtTokenProvider.getUsername(authorization);
+            String username = jwtTokenProvider.getEmail(authorization);
 
             // load the user associated with token
             // TODO 这里需要修改，应该是从 Redis 中读取该数据（需要考虑这里是否一定可以获取到该对象，如果是的话，那就在 Redis 中查询，如果不是那就读取 loadUserByUsername）
