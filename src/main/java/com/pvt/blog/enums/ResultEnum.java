@@ -1,5 +1,6 @@
 package com.pvt.blog.enums;
 
+import com.pvt.blog.common.ResultConstant;
 import lombok.Getter;
 
 /**
@@ -18,7 +19,7 @@ public enum ResultEnum {
     /**
      * 用户名已存在
      */
-    FAIL_USER_EXIST(409, "用户已存在!!!"),
+    FAIL_USER_EXIST(409, ResultConstant.USER_EXIST),
     /**
      * 邮箱格式错误
      */

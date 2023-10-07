@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 /**
  * @author LW
- * @date 2023/7/15
- * @description 角色
  */
 @Data
 @Entity
