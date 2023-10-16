@@ -2,6 +2,9 @@ package com.pvt.blog.controller;
 
 import java.util.List;
 
+import com.pvt.blog.pojo.dto.UserDTO;
+import com.pvt.blog.pojo.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,14 +23,16 @@ import jakarta.annotation.Resource;
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Resource
     private IUserService userService;
 
     // 用户登录
     @PostMapping("/login")
-    public ResultResponse<String> userLogin(@RequestBody User user) {
-        return userService.userLogin(user);
+    public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {
+        log.info(userdto.toString());
+        return userService.userLogin(userdto);
     }
 
     // 用户注册
