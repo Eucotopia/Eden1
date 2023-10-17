@@ -5,11 +5,7 @@ import java.util.List;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pvt.blog.pojo.User;
 
@@ -50,5 +46,10 @@ public class UserController {
     @GetMapping("/ok")
     public String ok() {
         return "OK";
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable String id){
+        return userService.getUserById(id);
     }
 }

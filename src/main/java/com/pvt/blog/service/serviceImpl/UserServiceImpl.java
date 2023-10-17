@@ -67,8 +67,6 @@ public class UserServiceImpl implements IUserService {
         // 查询数据库
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
         UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token);
-
-
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 
@@ -105,6 +103,12 @@ public class UserServiceImpl implements IUserService {
     public ResultResponse<List<User>> getAllUser() {
         List<User> userList = userRepository.findAll();
         return new ResultResponse<>(ResultEnum.SUCCESS, userList);
+    }
+
+    @Override
+    public User getUserById(String id) {
+        Optional<User> byId = userRepository.findById(Long.parseLong(id));
+        return byId.orElse(null);
     }
 
 }

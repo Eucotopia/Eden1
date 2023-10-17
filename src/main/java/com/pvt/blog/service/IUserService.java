@@ -20,5 +20,6 @@ public interface IUserService {
 
     ResultResponse<List<User>> getAllUser();
 
+    User getUserById(String id);
 
 }

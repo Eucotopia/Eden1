@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * @author LW
@@ -36,10 +38,18 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors((cors) -> {
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                    CorsConfiguration configuration = new CorsConfiguration();
+                    configuration.addAllowedOriginPattern("*");
+                    configuration.addAllowedHeader("*");
+                    configuration.addAllowedMethod("*");
+                    source.registerCorsConfiguration("/**", configuration);
+                    cors.configurationSource(source);
+                })
                 .authorizeHttpRequests((authorize) -> {
                     authorize.requestMatchers("/user/login").permitAll()
                             .requestMatchers("/user").permitAll()
-                            .requestMatchers("/user/ok").permitAll()
                             .anyRequest().authenticated();
                 });
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
@@ -50,5 +60,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 }
