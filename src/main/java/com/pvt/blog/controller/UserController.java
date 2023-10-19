@@ -2,6 +2,7 @@ package com.pvt.blog.controller;
 
 import java.util.List;
 
+import cn.hutool.log.Log;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,7 @@ public class UserController {
 
     @GetMapping("/ok")
     public String ok() {
+        log.info("ok");
         return "OK";
     }
 

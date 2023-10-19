@@ -24,8 +24,6 @@ public class User implements Serializable {
     @Transient
     private static final Long serialVersionUID = -6849794470754667710L;
 
-
-
     /**
      * 用户 id
      * strategy 表示主键生成策略
