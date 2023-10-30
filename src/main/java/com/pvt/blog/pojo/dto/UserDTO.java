@@ -8,7 +8,7 @@ public class UserDTO {
     /**
      * 用户名
      */
-    private String email;
+    private String username;
     /**
      * 密码
      */

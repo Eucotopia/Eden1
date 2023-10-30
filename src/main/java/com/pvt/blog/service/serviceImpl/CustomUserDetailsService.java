@@ -1,7 +1,7 @@
 package com.pvt.blog.service.serviceImpl;
 
-import com.pvt.blog.repository.UserRepository;
 import com.pvt.blog.pojo.User;
+import com.pvt.blog.repository.UserRepository;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author LW
  * @date 2023/7/15
- * @description
+ * @description 自定义 UserDetailsService
  */
 @Service
 @Slf4j
@@ -26,15 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email:" + email));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username:" + username));
+
         Set<GrantedAuthority> authorities = user.getRoles().stream()
                 .map((role) -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
 
         return new org.springframework.security.core.userdetails.User(
-                email,
+                username,
                 user.getPassword(),
                 authorities
         );

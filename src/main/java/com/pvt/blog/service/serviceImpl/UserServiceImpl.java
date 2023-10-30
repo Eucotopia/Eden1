@@ -1,6 +1,8 @@
 package com.pvt.blog.service.serviceImpl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Validator;
+import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import com.pvt.blog.repository.RoleRepository;
@@ -9,7 +11,6 @@ import com.pvt.blog.common.RoleConstant;
 import com.pvt.blog.enums.ResultEnum;
 
 import com.pvt.blog.pojo.Role;
-import com.pvt.blog.pojo.User;
 import com.pvt.blog.service.IUserService;
 import com.pvt.blog.util.JwtTokenProvider;
 import com.pvt.blog.util.ResultResponse;
@@ -42,20 +43,18 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private RoleRepository roleRepository;
-
-
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
-
+        log.info("userLogin:{}", userDto);
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                userDto.getEmail(),userDto.getPassword()));
+                userDto.getUsername(),userDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 生成 token
         String token = jwtTokenProvider.generateToken(authentication);
-
+        log.info("token"+token);
         /*
          TODO 登录成功后，将对象存入 redis 中
          JSON parse = JSONUtil.parse(loginDto);
@@ -63,10 +62,9 @@ public class UserServiceImpl implements IUserService {
          Object o = redisTemplate.opsForValue().get(loginDto.getUsername());
          JSONUtil.toBean(o,LoginDto.class);
         */
-
         // 查询数据库
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token);
+        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getNickname(), token);
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 
@@ -75,40 +73,40 @@ public class UserServiceImpl implements IUserService {
         2. 检查数据库中是否存在该用户（用户名重复）
         3. 创建该用户并保存进数据库
      */
-    @Override
-    public ResultResponse<String> userRegister(User user) {
-        if (!Validator.isEmail(user.getEmail())) {
-            // email 格式不正确
-            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
-        }
-        if (userRepository.existsUserByUsername(user.getEmail())) {
-            // 注册的用户已存在
-            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
-        }
-        User newUser = new User();
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        newUser.setUsername(user.getUsername());
-        newUser.setEmail(user.getEmail());
-        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
-        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-        newUser.setRoles(Collections.singleton(role.orElse(null)));
-        userRepository.save(newUser);
-        return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
-    }
+//    @Override
+//    public ResultResponse<String> userRegister(User1 user) {
+//        if (!Validator.isEmail(user.getEmail())) {
+//            // email 格式不正确
+//            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+//        }
+//        if (userRepository.existsUserByUsername(user.getEmail())) {
+//            // 注册的用户已存在
+//            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+//        }
+//        User1 newUser = new User1();
+//        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+//        newUser.setUsername(user.getUsername());
+//        newUser.setEmail(user.getEmail());
+//        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
+//        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
+//        newUser.setRoles(Collections.singleton(role.orElse(null)));
+//        userRepository.save(newUser);
+//        return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
+//    }
 
-    /*
-        获取所有用户
-     */
-    @Override
-    public ResultResponse<List<User>> getAllUser() {
-        List<User> userList = userRepository.findAll();
-        return new ResultResponse<>(ResultEnum.SUCCESS, userList);
-    }
-
-    @Override
-    public User getUserById(String id) {
-        Optional<User> byId = userRepository.findById(Long.parseLong(id));
-        return byId.orElse(null);
-    }
+//    /*
+//        获取所有用户
+//     */
+//    @Override
+//    public ResultResponse<List<User1>> getAllUser() {
+//        List<User1> userList = userRepository.findAll();
+//        return new ResultResponse<>(ResultEnum.SUCCESS, userList);
+//    }
+//
+//    @Override
+//    public User1 getUserById(String id) {
+//        Optional<User1> byId = userRepository.findById(Long.parseLong(id));
+//        return byId.orElse(null);
+//    }
 
 }

@@ -2,13 +2,10 @@ package com.pvt.blog.controller;
 
 import java.util.List;
 
-import cn.hutool.log.Log;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import com.pvt.blog.pojo.User;
 
 import com.pvt.blog.service.IUserService;
 import com.pvt.blog.util.ResultResponse;
@@ -28,30 +25,30 @@ public class UserController {
     // 用户登录
     @PostMapping("/login")
     public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {
-        log.info(userdto.toString());
+        log.info("userLogin:{}", userdto);
         return userService.userLogin(userdto);
     }
 
-    // 用户注册
-    @PostMapping
-    public ResultResponse<String> userRegister(@RequestBody User user) {
-        return userService.userRegister(user);
-    }
+//    // 用户注册
+//    @PostMapping
+//    public ResultResponse<String> userRegister(@RequestBody User1 user) {
+//        return userService.userRegister(user);
+//    }
 
-    // 获取所有用户
-    @GetMapping
-    public ResultResponse<List<User>> getAllUser() {
-        return userService.getAllUser();
-    }
-
-    @GetMapping("/ok")
-    public String ok() {
-        log.info("ok");
-        return "OK";
-    }
-
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable String id){
-        return userService.getUserById(id);
-    }
+//    // 获取所有用户
+//    @GetMapping
+//    public ResultResponse<List<User1>> getAllUser() {
+//        return userService.getAllUser();
+//    }
+//
+//    @GetMapping("/ok")
+//    public String ok() {
+//        log.info("ok");
+//        return "OK";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public User1 getUserById(@PathVariable String id){
+//        return userService.getUserById(id);
+//    }
 }

@@ -10,10 +10,10 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name = "roles")
+@Table(name = "role")
 public class Role implements Serializable {
     @Transient
-    public static final Long serialVersionUID = -6849794470754623710L;
+    public static final Long serialVersionUid = -6849794470754623710L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +21,4 @@ public class Role implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
 }

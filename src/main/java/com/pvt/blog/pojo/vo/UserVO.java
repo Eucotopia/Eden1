@@ -9,15 +9,15 @@ public class UserVO {
     /**
      * 用户 ID
      */
-    private Integer id;
+    private Long id;
     /**
      * 用户名
      */
     private String username;
     /**
-     * 密码
+     * 昵称
      */
-    private String email;
+    private String nickname;
     /**
      * token
      */

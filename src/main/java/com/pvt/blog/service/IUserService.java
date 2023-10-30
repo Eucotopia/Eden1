@@ -1,7 +1,5 @@
 package com.pvt.blog.service;
 
-import com.pvt.blog.pojo.User;
-
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import com.pvt.blog.util.ResultResponse;
@@ -16,10 +14,10 @@ import java.util.List;
 public interface IUserService {
     ResultResponse<UserVO> userLogin(UserDTO userDto);
 
-    ResultResponse<String> userRegister(User user);
+//    ResultResponse<String> userRegister(User1 user);
 
-    ResultResponse<List<User>> getAllUser();
-
-    User getUserById(String id);
+//    ResultResponse<List<User1>> getAllUser();
+//
+//    User1 getUserById(String id);
 
 }
