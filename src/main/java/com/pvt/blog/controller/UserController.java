@@ -25,7 +25,6 @@ public class UserController {
     // 用户登录
     @PostMapping("/login")
     public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {
-        log.info("userLogin:{}", userdto);
         return userService.userLogin(userdto);
     }
 
@@ -39,16 +38,5 @@ public class UserController {
 //    @GetMapping
 //    public ResultResponse<List<User1>> getAllUser() {
 //        return userService.getAllUser();
-//    }
-//
-//    @GetMapping("/ok")
-//    public String ok() {
-//        log.info("ok");
-//        return "OK";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public User1 getUserById(@PathVariable String id){
-//        return userService.getUserById(id);
 //    }
 }

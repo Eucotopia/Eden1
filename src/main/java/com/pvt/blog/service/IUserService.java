@@ -12,6 +12,11 @@ import java.util.List;
  */
 @Service
 public interface IUserService {
+    /**
+     * 用户登录
+     * @param userDto userDto
+     * @return ResultResponse<UserVO>
+     */
     ResultResponse<UserVO> userLogin(UserDTO userDto);
 
 //    ResultResponse<String> userRegister(User1 user);

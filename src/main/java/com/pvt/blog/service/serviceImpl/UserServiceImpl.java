@@ -43,18 +43,18 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private RoleRepository roleRepository;
+
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
-        log.info("userLogin:{}", userDto);
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                userDto.getUsername(),userDto.getPassword()));
+                userDto.getUsername(), userDto.getPassword()));
 
+        // 将登录对象存入 SecurityContextHolder 中
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 生成 token
         String token = jwtTokenProvider.generateToken(authentication);
-        log.info("token"+token);
         /*
          TODO 登录成功后，将对象存入 redis 中
          JSON parse = JSONUtil.parse(loginDto);
