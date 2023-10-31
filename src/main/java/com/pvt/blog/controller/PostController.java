@@ -25,7 +25,6 @@ public class PostController {
      */
     @GetMapping("/{page}/{size}")
     public ResultResponse<List<Post>>  getAllPost(@PathVariable("page") Integer page,@PathVariable("size") Integer size){
-        log.info("123");
         return postService.findALl(page,size);
     }
 
@@ -44,6 +43,7 @@ public class PostController {
      */
     @GetMapping("/{id}")
     public ResultResponse<Post> getPostById(@PathVariable("id") Long id){
+        log.info("123");
         return postService.getPostById(id);
     }
 }
