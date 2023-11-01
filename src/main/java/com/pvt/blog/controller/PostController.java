@@ -1,6 +1,7 @@
 package com.pvt.blog.controller;
 
 import com.pvt.blog.pojo.Post;
+import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -34,8 +35,8 @@ public class PostController {
      * @return ResultResponse<String>
      */
     @PostMapping
-    public ResultResponse<String> addPost(@RequestBody Post post){
-        return postService.addPost(post);
+    public ResultResponse<String> addPost(@RequestBody PostDTO postDTO){
+        return postService.addPost(postDTO);
     }
 
     /**

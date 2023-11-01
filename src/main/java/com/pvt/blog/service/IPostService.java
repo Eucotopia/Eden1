@@ -1,6 +1,7 @@
 package com.pvt.blog.service;
 
 import com.pvt.blog.pojo.Post;
+import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.repository.PostRepository;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -13,7 +14,7 @@ import java.util.Optional;
 public interface IPostService {
     ResultResponse<List<Post>> findALl(Integer page,Integer size);
 
-    ResultResponse<String> addPost(Post post);
+    ResultResponse<String> addPost(PostDTO postDTO);
 
     ResultResponse<Post> getPostById(Long id);
 

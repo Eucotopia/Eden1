@@ -1,7 +1,9 @@
 package com.pvt.blog.service.serviceImpl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Post;
+import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.repository.PostRepository;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.util.ResultResponse;
@@ -27,7 +29,8 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public ResultResponse<String> addPost(Post post) {
+    public ResultResponse<String> addPost(PostDTO postDTO) {
+        Post post = BeanUtil.copyProperties(postDTO, Post.class);
         Post save = postRepository.save(post);
         return ResultResponse.success(ResultEnum.SUCCESS,"成功");
     }

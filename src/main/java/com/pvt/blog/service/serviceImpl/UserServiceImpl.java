@@ -46,6 +46,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
+        log.info(userDto.toString());
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getUsername(), userDto.getPassword()));

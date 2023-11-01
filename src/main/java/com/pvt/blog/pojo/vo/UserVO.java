@@ -3,13 +3,15 @@ package com.pvt.blog.pojo.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 public class UserVO {
     /**
      * 用户 ID
      */
-    private Long id;
+    private Integer id;
     /**
      * 用户名
      */

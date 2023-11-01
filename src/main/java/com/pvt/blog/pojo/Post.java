@@ -2,11 +2,13 @@ package com.pvt.blog.pojo;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @Table(name = "post")
 @Data
@@ -19,7 +21,7 @@ public class Post implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     /**
      * 文章标题
      */
@@ -49,8 +51,9 @@ public class Post implements Serializable {
     /**
      * 用户 ID
      */
+    @CreatedBy
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
     /**
      * 点赞数
      */
