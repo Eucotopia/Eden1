@@ -31,7 +31,7 @@ public class PostController {
 
     /**
      * 添加博客
-     * @param post post
+     * @param postDTO postDTO
      * @return ResultResponse<String>
      */
     @PostMapping

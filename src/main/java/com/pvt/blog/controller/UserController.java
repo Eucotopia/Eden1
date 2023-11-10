@@ -25,7 +25,6 @@ public class UserController {
     // 用户登录
     @PostMapping("/login")
     public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {
-        log.info("进入了");
         return userService.userLogin(userdto);
     }
 
