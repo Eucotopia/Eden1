@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.UUID;
 
+/**
+ * @author LIWEI
+ */
 @Data
 @AllArgsConstructor
 public class UserVO {
