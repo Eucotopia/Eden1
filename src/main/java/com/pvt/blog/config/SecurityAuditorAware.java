@@ -1,15 +1,18 @@
 package com.pvt.blog.config;
 
+import cn.hutool.log.Log;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.repository.UserRepository;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import reactor.util.annotation.NonNull;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
