@@ -10,12 +10,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author eucotopia
+ */
 @Service
 public interface IPostService {
-    ResultResponse<List<Post>> findALl(Integer page,Integer size);
+    ResultResponse<List<Post>> findAll(Integer page,Integer size);
 
     ResultResponse<String> addPost(PostDTO postDTO);
 
     ResultResponse<Post> getPostById(Long id);
+
+    ResultResponse<Long> getPostCount();
 
 }

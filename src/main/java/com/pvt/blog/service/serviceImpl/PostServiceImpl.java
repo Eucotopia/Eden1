@@ -16,28 +16,42 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author eucotopia
+ */
 @Service
 public class PostServiceImpl implements IPostService {
     @Resource
     private PostRepository postRepository;
 
     @Override
-    public ResultResponse<List<Post>> findALl(Integer page,Integer size) {
-        Pageable pageable = PageRequest.of(page,size);
+    public ResultResponse<List<Post>> findAll(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Post> all = postRepository.findAll(pageable);
-        return ResultResponse.success(ResultEnum.SUCCESS,all.getContent());
+        System.out.println("TotalPages"+all.getTotalPages());
+        List<Post> content = all.getContent();
+        for (Post post : content) {
+            System.out.println(post.getId());
+        }
+        System.out.println("content:"+all.getContent());
+        return ResultResponse.success(ResultEnum.SUCCESS, all.getContent());
     }
 
     @Override
     public ResultResponse<String> addPost(PostDTO postDTO) {
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
         Post save = postRepository.save(post);
-        return ResultResponse.success(ResultEnum.SUCCESS,"成功");
+        return ResultResponse.success(ResultEnum.SUCCESS, "成功");
     }
 
     @Override
     public ResultResponse<Post> getPostById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(()->new RuntimeException("没有该文章"));
-        return ResultResponse.success(ResultEnum.SUCCESS,post);
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("没有该文章"));
+        return ResultResponse.success(ResultEnum.SUCCESS, post);
+    }
+
+    @Override
+    public ResultResponse<Long> getPostCount() {
+        return ResultResponse.success(ResultEnum.SUCCESS, postRepository.count());
     }
 }
