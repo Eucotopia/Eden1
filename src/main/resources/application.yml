@@ -6,7 +6,7 @@ spring:
     datasource:
         username: root
         password: lw001208
-        url: jdbc:mysql://localhost:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://localhost:3306/blog?serverTimezone=GMT%2b8&useUnicode=true&characterEncoding=utf8
     data:
         redis:
             host: 127.0.0.1

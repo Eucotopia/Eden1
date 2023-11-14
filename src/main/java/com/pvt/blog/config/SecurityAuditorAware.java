@@ -12,6 +12,9 @@ import reactor.util.annotation.NonNull;
 
 import java.util.Optional;
 
+/**
+ * @author LIWEI
+ */
 @Component
 public class SecurityAuditorAware implements AuditorAware<Integer> {
     @Resource
@@ -29,9 +32,8 @@ public class SecurityAuditorAware implements AuditorAware<Integer> {
         org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         // 获取当前登录用户的用户名
         String username = userDetail.getUsername();
-        // 根据用户名查询用户
+        // 查询用户
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username:" + username));
-        // 返回用户 id
         return Optional.ofNullable(user.getId());
     }
 }
