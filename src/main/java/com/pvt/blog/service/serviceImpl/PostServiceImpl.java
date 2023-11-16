@@ -28,12 +28,12 @@ public class PostServiceImpl implements IPostService {
     public ResultResponse<List<Post>> findAll(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Post> all = postRepository.findAll(pageable);
-        System.out.println("TotalPages"+all.getTotalPages());
+        System.out.println("TotalPages" + all.getTotalPages());
         List<Post> content = all.getContent();
         for (Post post : content) {
             System.out.println(post.getId());
         }
-        System.out.println("content:"+all.getContent());
+        System.out.println("content:" + all.getContent());
         return ResultResponse.success(ResultEnum.SUCCESS, all.getContent());
     }
 
@@ -53,5 +53,18 @@ public class PostServiceImpl implements IPostService {
     @Override
     public ResultResponse<Long> getPostCount() {
         return ResultResponse.success(ResultEnum.SUCCESS, postRepository.count());
+    }
+
+    @Override
+    public ResultResponse<String> likeBlog(Long id) {
+        Optional<Post> byId = postRepository.findById(id);
+        if (byId.isPresent()) {
+            Post post = byId.get();
+            post.setLikes(post.getLikes() + 1);
+            postRepository.save(post);
+            return ResultResponse.success(ResultEnum.SUCCESS, "点赞成功");
+        } else {
+            return ResultResponse.fail(ResultEnum.FAIL);
+        }
     }
 }
