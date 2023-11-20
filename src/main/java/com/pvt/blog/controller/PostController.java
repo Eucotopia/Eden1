@@ -62,9 +62,13 @@ public class PostController {
         return postService.getPostCount();
     }
 
-    @PostMapping("/like/{id}")
+    @GetMapping("/like/{id}")
     public ResultResponse<String> likeBlog(@PathVariable("id") Long id) {
-        log.info("id:" + id);
         return postService.likeBlog(id);
+    }
+
+    @GetMapping("/isLiked/{id}")
+    public ResultResponse<Boolean> isLiked(@PathVariable("id") Long id) {
+        return postService.isLiked(id);
     }
 }

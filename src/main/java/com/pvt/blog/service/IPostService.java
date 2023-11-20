@@ -30,4 +30,5 @@ public interface IPostService {
      */
     ResultResponse<String> likeBlog(Long id);
 
+    ResultResponse<Boolean> isLiked(Long id);
 }
