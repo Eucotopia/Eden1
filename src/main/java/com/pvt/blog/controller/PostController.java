@@ -27,7 +27,7 @@ public class PostController {
      */
     @GetMapping("/{page}/{size}")
     public ResultResponse<List<Post>> getAllPost(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
-        System.out.println("page" + page + "size:" + size);
+        System.out.println("进行了数据库访问");
         return postService.findAll(page, size);
     }
 
