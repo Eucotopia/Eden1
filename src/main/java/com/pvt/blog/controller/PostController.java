@@ -8,6 +8,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -33,12 +34,13 @@ public class PostController {
 
     /**
      * 添加博客
+     *
      * @param postDTO postDTO
      * @return ResultResponse<String>
      */
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResultResponse<String> addPost(@RequestBody PostDTO postDTO){
+    public ResultResponse<String> addPost(@RequestBody PostDTO postDTO) {
         return postService.addPost(postDTO);
     }
 
@@ -58,5 +60,15 @@ public class PostController {
     @GetMapping("/count")
     public ResultResponse<Long> getPostCount() {
         return postService.getPostCount();
+    }
+
+    @GetMapping("/like/{id}")
+    public ResultResponse<String> likeBlog(@PathVariable("id") Long id) {
+        return postService.likeBlog(id);
+    }
+
+    @GetMapping("/isLiked/{id}")
+    public ResultResponse<Boolean> isLiked(@PathVariable("id") Long id) {
+        return postService.isLiked(id);
     }
 }

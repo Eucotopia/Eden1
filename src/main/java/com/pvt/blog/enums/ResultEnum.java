@@ -13,6 +13,10 @@ public enum ResultEnum {
      */
     SUCCESS(200, "成功"),
     /**
+     * 失败
+     */
+    FAIL(400, "失败"),
+    /**
      * 用户注册成功
      */
     SUCCESS_USER_REGISTER(201, "用户注册成功!!!"),

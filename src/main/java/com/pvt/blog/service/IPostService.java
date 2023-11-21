@@ -23,4 +23,12 @@ public interface IPostService {
 
     ResultResponse<Long> getPostCount();
 
+    /**
+     * 点赞
+     * @param id id
+     * @return ResultResponse<String>
+     */
+    ResultResponse<String> likeBlog(Long id);
+
+    ResultResponse<Boolean> isLiked(Long id);
 }
