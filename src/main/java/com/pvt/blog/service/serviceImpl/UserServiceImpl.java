@@ -65,7 +65,8 @@ public class UserServiceImpl implements IUserService {
         */
         // 查询数据库
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getNickname(), token);
+        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getNickname(), token, user.getImage());
+        log.info(String.valueOf(userVO));
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 

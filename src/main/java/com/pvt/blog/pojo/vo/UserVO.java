@@ -27,4 +27,9 @@ public class UserVO {
      * token
      */
     private String token;
+
+    /**
+     * 用户头像
+     */
+    private String image;
 }

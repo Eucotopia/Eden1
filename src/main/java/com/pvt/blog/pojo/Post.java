@@ -66,6 +66,7 @@ public class Post implements Serializable {
      */
     @Column(name = "views")
     private Integer views;
+
     /**
      * 评论数
      */

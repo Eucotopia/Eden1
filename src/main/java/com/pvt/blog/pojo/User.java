@@ -50,6 +50,12 @@ public class User implements Serializable {
     @CreatedDate
     @Column(name = "create_time", nullable = false)
     private Date CreateTime;
+
+    /**
+     * 头像地址
+     */
+    @Column(name = "image")
+    private String image;
     /**
      * 角色
      */
