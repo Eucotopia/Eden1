@@ -57,6 +57,11 @@ public class Post implements Serializable {
     @Column(name = "user_id")
     private Integer userId;
     /**
+     * 博客封面
+     */
+    @Column(name = "cover")
+    private String cover;
+    /**
      * 点赞数
      */
     @Column(name = "likes")
