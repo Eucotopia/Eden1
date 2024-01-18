@@ -49,7 +49,7 @@ public class User implements Serializable {
      */
     @CreatedDate
     @Column(name = "create_time", nullable = false)
-    private Date CreateTime;
+    private Date createTime;
 
     /**
      * 头像地址

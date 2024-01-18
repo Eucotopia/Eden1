@@ -14,4 +14,5 @@ spring:
             database: 0
     jpa:
         show-sql: true
-
+server:
+    port: 8082

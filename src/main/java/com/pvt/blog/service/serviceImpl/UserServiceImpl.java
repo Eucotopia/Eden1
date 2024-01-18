@@ -75,26 +75,27 @@ public class UserServiceImpl implements IUserService {
         2. 检查数据库中是否存在该用户（用户名重复）
         3. 创建该用户并保存进数据库
      */
-//    @Override
-//    public ResultResponse<String> userRegister(User1 user) {
-//        if (!Validator.isEmail(user.getEmail())) {
-//            // email 格式不正确
-//            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
-//        }
-//        if (userRepository.existsUserByUsername(user.getEmail())) {
-//            // 注册的用户已存在
-//            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
-//        }
-//        User1 newUser = new User1();
-//        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//        newUser.setUsername(user.getUsername());
-//        newUser.setEmail(user.getEmail());
-//        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
-//        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-//        newUser.setRoles(Collections.singleton(role.orElse(null)));
-//        userRepository.save(newUser);
-//        return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
-//    }
+    @Override
+    public ResultResponse<String> userRegister(UserDTO user) {
+        if (!Validator.isEmail(user.getUsername())) {
+            // email 格式不正确
+            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+        }
+        if (userRepository.existsUserByUsername(user.getUsername())) {
+            // 注册的用户已存在
+            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+        }
+        User newUser = new User();
+        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        newUser.setUsername(user.getUsername());
+        newUser.setNickname(user.getNickname());
+        newUser.setMotto("来点人生箴言吧");
+        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
+        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
+        newUser.setRoles(Collections.singleton(role.orElse(null)));
+        userRepository.save(newUser);
+        return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
+    }
 
 //    /*
 //        获取所有用户

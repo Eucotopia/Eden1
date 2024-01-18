@@ -2,6 +2,7 @@ package com.pvt.blog.pojo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 /**
  * @author LIWEI
  */
@@ -16,5 +17,9 @@ public class UserDTO {
      * 密码
      */
     private String password;
+    /**
+     * 昵称
+     */
+    private String nickname;
 
 }
