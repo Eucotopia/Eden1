@@ -1,5 +1,6 @@
 package com.pvt.blog.service;
 
+import com.pvt.blog.pojo.Category;
 import com.pvt.blog.util.ResultResponse;
 import org.springframework.stereotype.Service;
 
@@ -10,5 +11,5 @@ import java.util.List;
  */
 @Service
 public interface ICategoryService {
-    ResultResponse<List<String>> getCategories();
+    ResultResponse<List<Category>> getCategories();
 }

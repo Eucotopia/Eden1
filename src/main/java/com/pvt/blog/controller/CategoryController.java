@@ -1,5 +1,6 @@
 package com.pvt.blog.controller;
 
+import com.pvt.blog.pojo.Category;
 import com.pvt.blog.service.ICategoryService;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -19,7 +20,7 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     @GetMapping
-    public ResultResponse<List<String>> getCategories() {
+    public ResultResponse<List<Category>> getCategories() {
         return categoryService.getCategories();
     }
 }

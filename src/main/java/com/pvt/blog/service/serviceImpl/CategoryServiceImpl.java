@@ -19,11 +19,7 @@ public class CategoryServiceImpl implements ICategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public ResultResponse<List<String>> getCategories() {
-        List<Category> all = categoryRepository.findAll();
-        List<String> names = all.stream()
-                .map(Category::getName)
-                .toList();
-        return ResultResponse.success(ResultEnum.SUCCESS,names);
+    public ResultResponse<List<Category>> getCategories() {
+        return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.findAll());
     }
 }
