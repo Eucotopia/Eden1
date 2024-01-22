@@ -1,5 +1,6 @@
 package com.pvt.blog.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.pvt.blog.pojo.User;
@@ -44,9 +45,14 @@ public class UserController {
         return userService.userRegister(userDto);
     }
 
-//    // 获取所有用户
-//    @GetMapping
-//    public ResultResponse<List<User1>> getAllUser() {
-//        return userService.getAllUser();
-//    }
+    // 获取所有用户
+    @GetMapping
+    public ResultResponse<List<User>> getAllUser() {
+        return userService.getAllUser();
+    }
+
+    @GetMapping("/count")
+    public ResultResponse<Long> getUserCount() {
+        return userService.getUserCount();
+    }
 }

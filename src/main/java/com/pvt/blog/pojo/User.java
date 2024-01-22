@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * @author eucotopia
+ */
 @Table(name = "user")
 @Data
 @Entity
@@ -59,7 +62,7 @@ public class User implements Serializable {
     /**
      * 角色
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity = Role.class)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Role.class)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")

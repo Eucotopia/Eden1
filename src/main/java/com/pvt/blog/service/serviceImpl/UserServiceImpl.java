@@ -97,14 +97,20 @@ public class UserServiceImpl implements IUserService {
         return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
     }
 
-//    /*
-//        获取所有用户
-//     */
-//    @Override
-//    public ResultResponse<List<User1>> getAllUser() {
-//        List<User1> userList = userRepository.findAll();
-//        return new ResultResponse<>(ResultEnum.SUCCESS, userList);
-//    }
+    @Override
+    public ResultResponse<Long> getUserCount() {
+
+        return ResultResponse.success(ResultEnum.SUCCESS, userRepository.count());
+    }
+
+    /*
+        获取所有用户
+     */
+    @Override
+    public ResultResponse<List<User>> getAllUser() {
+        List<User> userList = userRepository.findAll();
+        return new ResultResponse<>(ResultEnum.SUCCESS, userList);
+    }
 //
 //    @Override
 //    public User1 getUserById(String id) {
