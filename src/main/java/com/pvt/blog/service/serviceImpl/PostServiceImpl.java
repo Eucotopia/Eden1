@@ -51,6 +51,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public ResultResponse<String> addPost(PostDTO postDTO) {
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
+        post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         Post save = postRepository.save(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "成功");
     }

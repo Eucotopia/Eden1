@@ -10,5 +10,6 @@ public class PostDTO {
     private String title;
     private String content;
     private String summary;
-    private Integer isTop;
+    private Boolean isTop;
+    private String cover;
 }
