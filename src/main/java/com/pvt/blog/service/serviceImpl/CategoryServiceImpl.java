@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LIWEI
@@ -21,5 +22,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public ResultResponse<List<Category>> getCategories() {
         return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.findAll());
+    }
+
+    @Override
+    public ResultResponse<List<Category>> getRootCategories() {
+        return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.findCategoriesByParentIdAndIdAfter(0L, 0L));
     }
 }

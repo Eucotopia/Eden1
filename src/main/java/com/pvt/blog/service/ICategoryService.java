@@ -5,6 +5,7 @@ import com.pvt.blog.util.ResultResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LIWEI
@@ -12,4 +13,5 @@ import java.util.List;
 @Service
 public interface ICategoryService {
     ResultResponse<List<Category>> getCategories();
+    ResultResponse<List<Category>> getRootCategories();
 }
