@@ -77,6 +77,4 @@ public class Post implements Serializable {
      */
     @Column(name = "comments")
     private Integer comments;
-
-
 }

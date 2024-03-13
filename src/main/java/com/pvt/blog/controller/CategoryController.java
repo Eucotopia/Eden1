@@ -26,7 +26,7 @@ public class CategoryController {
     }
 
     @GetMapping("/root")
-    public Optional<List<Category>> getRootCategories() {
+    public ResultResponse<List<Category>> getRootCategories() {
         return categoryService.getRootCategories();
     }
 }

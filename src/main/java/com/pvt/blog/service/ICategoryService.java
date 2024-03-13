@@ -13,5 +13,5 @@ import java.util.Optional;
 @Service
 public interface ICategoryService {
     ResultResponse<List<Category>> getCategories();
-    Optional<List<Category>> getRootCategories();
+    ResultResponse<List<Category>> getRootCategories();
 }

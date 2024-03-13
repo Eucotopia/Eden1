@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Optional<List<Category>> getRootCategories() {
-        return categoryRepository.findCategoriesByParentIdAndIdAfter(0L, 0L);
+    public ResultResponse<List<Category>> getRootCategories() {
+        return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.findCategoriesByParentIdAndIdAfter(0L, 0L));
     }
 }
