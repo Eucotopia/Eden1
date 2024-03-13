@@ -1,7 +1,10 @@
 package com.pvt.blog.controller;
 
+import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.repository.CategoryRepository;
+import com.pvt.blog.service.ICategoryService;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -20,6 +23,7 @@ import java.util.List;
 public class PostController {
     @Resource
     private IPostService postService;
+
 
     /**
      * 分页查询所有文章
@@ -70,5 +74,10 @@ public class PostController {
     @GetMapping("/isLiked/{id}")
     public ResultResponse<Boolean> isLiked(@PathVariable("id") Long id) {
         return postService.isLiked(id);
+    }
+
+    @GetMapping("/related/{id}")
+    public ResultResponse<List<Post>> getRelatedArticles(@PathVariable Long id){
+        return postService.getPostsWithSameCategories(id);
     }
 }

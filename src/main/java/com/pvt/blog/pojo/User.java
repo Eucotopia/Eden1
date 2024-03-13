@@ -59,6 +59,7 @@ public class User implements Serializable {
      */
     @Column(name = "image")
     private String image;
+
     /**
      * 角色
      */

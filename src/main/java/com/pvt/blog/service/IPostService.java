@@ -31,4 +31,11 @@ public interface IPostService {
     ResultResponse<String> likeBlog(Long id);
 
     ResultResponse<Boolean> isLiked(Long id);
+
+    /**
+     * 获取相关文章
+     * @param id id
+     * @return List<Post>
+     */
+    ResultResponse<List<Post>> getPostsWithSameCategories(Long id);
 }
