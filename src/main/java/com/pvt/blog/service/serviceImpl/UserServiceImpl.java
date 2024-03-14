@@ -46,7 +46,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
-        log.info(userDto.toString());
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getUsername(), userDto.getPassword()));
@@ -66,7 +65,6 @@ public class UserServiceImpl implements IUserService {
         // 查询数据库
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
         UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getNickname(), token, user.getImage());
-        log.info(String.valueOf(userVO));
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 

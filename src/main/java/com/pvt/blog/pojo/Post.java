@@ -9,8 +9,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
+import java.util.Set;
 
+/**
+ * @author eucotopia
+ */
 @Table(name = "post")
 @Data
 @Entity
@@ -79,4 +82,15 @@ public class Post implements Serializable {
     private Integer comments;
     @Column(name = "rating")
     private Float rating;
+
+    /**
+     * 相关文章
+     */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Category.class)
+    @JoinTable(name = "post_category",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
+    )
+    private Set<Category> categories;
+
 }

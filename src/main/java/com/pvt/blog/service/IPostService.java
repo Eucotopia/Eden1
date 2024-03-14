@@ -39,4 +39,11 @@ public interface IPostService {
      * @return RResultResponse<List<Post>>
      */
     ResultResponse<List<Post>> getHostPosts();
+
+    /**
+     * 获取相关文章
+     * @param id id
+     * @return List<Post>
+     */
+    ResultResponse<List<Post>> getPostsWithSameCategories(Long id);
 }

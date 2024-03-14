@@ -3,8 +3,10 @@ package com.pvt.blog.service.serviceImpl;
 import cn.hutool.core.bean.BeanUtil;
 import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
+import com.pvt.blog.pojo.Category;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.repository.CategoryRepository;
 import com.pvt.blog.repository.PostRepository;
 import com.pvt.blog.repository.UserRepository;
 import com.pvt.blog.service.IPostService;
@@ -12,6 +14,7 @@ import com.pvt.blog.util.RedisUtil;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.annotation.Around;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +23,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author eucotopia
@@ -34,6 +41,8 @@ public class PostServiceImpl implements IPostService {
     private UserRepository userRepository;
     @Resource
     private PostRepository postRepository;
+    @Resource
+    private CategoryRepository categoryRepository;
 
     @Override
     public ResultResponse<List<Post>> findAll(Integer page, Integer size) {
@@ -52,7 +61,8 @@ public class PostServiceImpl implements IPostService {
     public ResultResponse<String> addPost(PostDTO postDTO) {
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
-        Post save = postRepository.save(post);
+        post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
+        Post save = postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "成功");
     }
 
@@ -102,6 +112,14 @@ public class PostServiceImpl implements IPostService {
         } else {
             return ResultResponse.success(ResultEnum.SUCCESS, false);
         }
+    }
+
+    @Override
+    public ResultResponse<List<Post>> getPostsWithSameCategories(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("没有该文章"));
+        List<Post> byCategoriesAndIdNotIn = postRepository.findByCategoriesInAndIdNot(post.getCategories(), post.getId());
+        System.out.println(byCategoriesAndIdNotIn);
+        return ResultResponse.success(ResultEnum.SUCCESS, byCategoriesAndIdNotIn);
     }
 
     @Override
