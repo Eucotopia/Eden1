@@ -70,4 +70,14 @@ public class PostController {
     public ResultResponse<Boolean> isLiked(@PathVariable("id") Long id) {
         return postService.isLiked(id);
     }
+
+    /**
+     * 获取热门文章
+     *
+     * @return ResultResponse<List < Post>>
+     */
+    @GetMapping("/hot")
+    public ResultResponse<List<Post>> getHotPosts() {
+        return postService.getHostPosts();
+    }
 }

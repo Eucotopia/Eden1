@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 /**
  * @author eucotopia
@@ -23,4 +25,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Modifying
     @Query(value = "update post set likes = likes - 1 where id = ?", nativeQuery = true)
     void dislikeBlog(Long id);
+
+    List<Post> getPostsByViewsAfter(Long views);
 }

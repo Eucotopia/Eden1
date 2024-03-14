@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 @Service
 public interface IPostService {
-    ResultResponse<List<Post>> findAll(Integer page,Integer size);
+    ResultResponse<List<Post>> findAll(Integer page, Integer size);
 
     ResultResponse<String> addPost(PostDTO postDTO);
 
@@ -25,10 +25,18 @@ public interface IPostService {
 
     /**
      * 点赞
+     *
      * @param id id
      * @return ResultResponse<String>
      */
     ResultResponse<String> likeBlog(Long id);
 
     ResultResponse<Boolean> isLiked(Long id);
+
+    /**
+     * 获取热门文章
+     *
+     * @return RResultResponse<List<Post>>
+     */
+    ResultResponse<List<Post>> getHostPosts();
 }

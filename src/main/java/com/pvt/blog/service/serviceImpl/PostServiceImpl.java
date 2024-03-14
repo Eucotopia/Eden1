@@ -103,4 +103,10 @@ public class PostServiceImpl implements IPostService {
             return ResultResponse.success(ResultEnum.SUCCESS, false);
         }
     }
+
+    @Override
+    public ResultResponse<List<Post>> getHostPosts() {
+        List<Post> postsByViewsAfter = postRepository.getPostsByViewsAfter(20L);
+        return ResultResponse.success(ResultEnum.SUCCESS, postsByViewsAfter);
+    }
 }
