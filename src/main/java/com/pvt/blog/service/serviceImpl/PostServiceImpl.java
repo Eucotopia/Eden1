@@ -121,4 +121,10 @@ public class PostServiceImpl implements IPostService {
         System.out.println(byCategoriesAndIdNotIn);
         return ResultResponse.success(ResultEnum.SUCCESS, byCategoriesAndIdNotIn);
     }
+
+    @Override
+    public ResultResponse<List<Post>> getHostPosts() {
+        List<Post> postsByViewsAfter = postRepository.getPostsByViewsAfter(20L);
+        return ResultResponse.success(ResultEnum.SUCCESS, postsByViewsAfter);
+    }
 }

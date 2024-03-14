@@ -80,6 +80,8 @@ public class Post implements Serializable {
      */
     @Column(name = "comments")
     private Integer comments;
+    @Column(name = "rating")
+    private Float rating;
 
     /**
      * 相关文章

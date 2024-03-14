@@ -71,8 +71,13 @@ public class PostController {
         return postService.isLiked(id);
     }
 
-    @GetMapping("/related/{id}")
-    public ResultResponse<List<Post>> getRelatedArticles(@PathVariable Long id){
-        return postService.getPostsWithSameCategories(id);
+    /**
+     * 获取热门文章
+     *
+     * @return ResultResponse<List < Post>>
+     */
+    @GetMapping("/hot")
+    public ResultResponse<List<Post>> getHotPosts() {
+        return postService.getHostPosts();
     }
 }
