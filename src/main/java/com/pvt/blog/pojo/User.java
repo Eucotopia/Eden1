@@ -67,8 +67,11 @@ public class User implements Serializable {
     /**
      * 账号状态
      */
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "state")
+    private Integer state;
+
+    @Transient
+    private String status;
     /**
      * 地址
      */

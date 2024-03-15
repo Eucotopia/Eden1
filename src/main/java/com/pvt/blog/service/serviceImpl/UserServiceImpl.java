@@ -113,8 +113,25 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResultResponse<List<User>> getAllUser() {
         List<User> userList = userRepository.findAll();
-        userList.forEach(user -> user.setRole(user.getRoles().iterator().next().getName()));
+        userList.forEach(user -> {
+            user.setRole(user.getRoles().iterator().next().getName());
+            user.setStatus(getStatues(user.getState()));
+        });
         return new ResultResponse<>(ResultEnum.SUCCESS, userList);
+    }
+
+    public String getStatues(Integer state) {
+        switch (state) {
+            case 0:
+                return "active";
+            case 1:
+                return "paused";
+            case 2:
+                return "vacation";
+            default:
+                break;
+        }
+        return null;
     }
 //
 //    @Override
