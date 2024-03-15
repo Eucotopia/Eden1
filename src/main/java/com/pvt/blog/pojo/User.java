@@ -19,7 +19,7 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
     @Transient
-    private static final Long serialVersionUid = -6849794470754667710L;
+    private static final Long SERIAL_VERSION_UID = -6849794470754667710L;
     /**
      * 用户 ID
      */
@@ -33,10 +33,15 @@ public class User implements Serializable {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
     /**
-     * 昵称
+     * 邮箱
      */
-    @Column(name = "nickname", nullable = false)
-    private String nickname;
+    @Column(name = "email", nullable = false)
+    private String email;
+    /**
+     * 年龄
+     */
+    @Column(name = "age", nullable = false)
+    private Integer age;
     /**
      * 密码
      */
@@ -57,9 +62,23 @@ public class User implements Serializable {
     /**
      * 头像地址
      */
-    @Column(name = "image")
-    private String image;
-
+    @Column(name = "avatar")
+    private String avatar;
+    /**
+     * 账号状态
+     */
+    @Column(name = "status")
+    private Integer status;
+    /**
+     * 地址
+     */
+    @Column(name = "address")
+    private String address;
+    /**
+     * 角色
+     */
+    @Transient
+    private String role;
     /**
      * 角色
      */

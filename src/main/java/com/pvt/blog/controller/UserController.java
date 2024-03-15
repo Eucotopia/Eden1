@@ -55,4 +55,9 @@ public class UserController {
     public ResultResponse<Long> getUserCount() {
         return userService.getUserCount();
     }
+
+    @DeleteMapping("/{id}")
+    public ResultResponse<String> deleteUser(@PathVariable("id") Long id) {
+        return userService.deleteUser(id);
+    }
 }

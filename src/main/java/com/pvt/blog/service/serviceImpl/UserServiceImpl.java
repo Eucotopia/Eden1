@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
         */
         // 查询数据库
         User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getNickname(), token, user.getImage());
+        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token, user.getAvatar());
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 
@@ -85,8 +85,8 @@ public class UserServiceImpl implements IUserService {
         }
         User newUser = new User();
         newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        newUser.setUsername(user.getUsername());
-        newUser.setNickname(user.getNickname());
+        newUser.setEmail(user.getUsername());
+        newUser.setUsername(user.getNickname());
         newUser.setMotto("来点人生箴言吧");
         Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
         // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
@@ -101,12 +101,19 @@ public class UserServiceImpl implements IUserService {
         return ResultResponse.success(ResultEnum.SUCCESS, userRepository.count());
     }
 
+    @Override
+    public ResultResponse<String> deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return ResultResponse.success(ResultEnum.SUCCESS, null);
+    }
+
     /*
         获取所有用户
      */
     @Override
     public ResultResponse<List<User>> getAllUser() {
         List<User> userList = userRepository.findAll();
+        userList.forEach(user -> user.setRole(user.getRoles().iterator().next().getName()));
         return new ResultResponse<>(ResultEnum.SUCCESS, userList);
     }
 //

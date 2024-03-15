@@ -29,4 +29,6 @@ public interface IUserService {
 
     ResultResponse<Long> getUserCount();
 
+    ResultResponse<String> deleteUser(Long id);
+
 }
