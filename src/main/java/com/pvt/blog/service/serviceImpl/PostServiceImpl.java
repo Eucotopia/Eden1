@@ -68,6 +68,7 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public ResultResponse<Post> getPostById(Long id) {
+        log.error("get post by id:{}", id);
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("没有该文章"));
         return ResultResponse.success(ResultEnum.SUCCESS, post);
     }
