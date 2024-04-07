@@ -25,9 +25,9 @@ import java.util.UUID;
 @RequestMapping("/image")
 public class ImageController {
     @PostMapping("/upload")
-    public ResultResponse<String> uploadFile(@RequestParam("image") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam("image") MultipartFile file) throws IOException {
         String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image\\";
         Files.copy(file.getInputStream(), Path.of(path + file.getOriginalFilename()));
-        return null;
+        return "http://localhost:8080/image/" + file.getOriginalFilename();
     }
 }
