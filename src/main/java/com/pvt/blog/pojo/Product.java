@@ -17,9 +17,13 @@ public class Product {
     @Column(name = "description")
     private String description;
     @Column(name = "price")
-    private Double price;
+    private String price;
     @Column(name = "href")
     private String href;
     @Column(name = "imageSrc")
     private String imageSrc;
+    @Column(name = "rating")
+    private Double rating;
+    @Column(name = "information")
+    private String information;
 }
