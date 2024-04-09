@@ -4,12 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+/**
+ * @author LIWEI
+ */
 @Table(name = "product")
 @Data
 @Entity
-@EntityListeners(AuditingEntityListener.class)
 public class Product {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
@@ -20,7 +23,7 @@ public class Product {
     private String price;
     @Column(name = "href")
     private String href;
-    @Column(name = "imageSrc")
+    @Column(name = "image_src")
     private String imageSrc;
     @Column(name = "rating")
     private Double rating;

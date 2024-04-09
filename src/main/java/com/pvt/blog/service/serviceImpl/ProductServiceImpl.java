@@ -20,4 +20,10 @@ public class ProductServiceImpl implements ProductService {
         List<Product> all = productRepository.findAll();
         return ResultResponse.success(ResultEnum.SUCCESS, all);
     }
+
+    @Override
+    public ResultResponse<String> addProduct(Product product) {
+        productRepository.save(product);
+        return ResultResponse.success(ResultEnum.SUCCESS, "OK");
+    }
 }

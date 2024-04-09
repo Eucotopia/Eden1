@@ -9,4 +9,5 @@ import java.util.List;
 @Service
 public interface ProductService {
     ResultResponse<List<Product>> getProducts();
+    ResultResponse<String> addProduct(Product product);
 }

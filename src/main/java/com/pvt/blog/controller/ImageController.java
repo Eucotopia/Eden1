@@ -1,6 +1,7 @@
 package com.pvt.blog.controller;
 
-import cn.hutool.core.io.FileUtil;
+import com.pvt.blog.enums.ResultEnum;
+import com.pvt.blog.util.FileUtil;
 import com.pvt.blog.util.ImageUtil;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
@@ -24,10 +25,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/image")
 public class ImageController {
+    @Resource
+    private FileUtil fileUtil;
+
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("image") MultipartFile file) throws IOException {
-        String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\image\\";
-        Files.copy(file.getInputStream(), Path.of(path + file.getOriginalFilename()));
-        return "http://localhost:8080/image/" + file.getOriginalFilename();
+    public ResultResponse<String> uploadFile(@RequestParam("image") MultipartFile file) throws IOException {
+        String fileName = fileUtil.uploadImage(file);
+        return ResultResponse.success(ResultEnum.SUCCESS, "http://localhost:8080/image/" + fileName);
     }
 }
