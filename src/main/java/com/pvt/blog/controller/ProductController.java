@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author LIWEI
+ */
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -21,6 +24,7 @@ public class ProductController {
 
     @PostMapping
     public ResultResponse<String> addProduct(@RequestBody Product product) {
+        System.out.println(product);
         return productService.addProduct(product);
     }
 }
