@@ -6,6 +6,7 @@ import com.pvt.blog.util.ImageUtil;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,12 @@ import java.util.UUID;
 public class ImageController {
     @Resource
     private FileUtil fileUtil;
+    @Value("${server.port}")
+    public String port;
 
     @PostMapping("/upload")
     public ResultResponse<String> uploadFile(@RequestParam("image") MultipartFile file) throws IOException {
         String fileName = fileUtil.uploadImage(file);
-        return ResultResponse.success(ResultEnum.SUCCESS, "http://localhost:8080/image/" + fileName);
+        return ResultResponse.success(ResultEnum.SUCCESS, "http://localhost:" + port + "/image/" + fileName);
     }
 }

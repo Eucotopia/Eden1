@@ -1,6 +1,9 @@
 package com.pvt.blog.util;
 
 import cn.hutool.core.lang.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +17,7 @@ import java.util.Objects;
  */
 @Component
 public class FileUtil {
+
     public String uploadImage(MultipartFile file) throws IOException {
         String path = System.getProperty("user.dir") + "/src/main/resources/static/image/";
         String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
