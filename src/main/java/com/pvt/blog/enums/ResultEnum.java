@@ -20,6 +20,7 @@ public enum ResultEnum {
      * 用户注册成功
      */
     SUCCESS_USER_REGISTER(201, "用户注册成功!!!"),
+    SUCCESS_POST_ADD(202, "添加文章成功!!!"),
     /**
      * 用户名已存在
      */
@@ -27,7 +28,10 @@ public enum ResultEnum {
     /**
      * 邮箱格式错误
      */
-    FAIL_EMAIL_FORMAT(410, "邮箱格式错误!!!");
+    FAIL_EMAIL_FORMAT(410, "邮箱格式错误!!!"),
+    FAIL_TITLE_EMPTY(411, "标题为空!!!"),
+    FAIL_SUMMARY_EMPTY(412, "摘要为空!!!"),
+    FAIL_CONTENT_EMPTY(412, "内容为空!!!");
 
     /**
      * 状态码

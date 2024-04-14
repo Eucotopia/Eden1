@@ -38,7 +38,7 @@ public class SecurityAuditorAware implements AuditorAware<Integer> {
         String username = userDetail.getUsername();
         log.info("username:{}", username);
         // 查询用户
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username:" + username));
+        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username:" + username));
         log.info("userId:{}", user.getId());
         return Optional.ofNullable(user.getId());
     }

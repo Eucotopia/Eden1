@@ -33,5 +33,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> getPostsByViewsAfter(Long views);
 
-    List<Post> findByCategoriesInAndIdNot(Set<Category> categories, Integer id);
+    List<Post> findByCategoriesInAndIdNot(Set<Category> categories, Long id);
 }

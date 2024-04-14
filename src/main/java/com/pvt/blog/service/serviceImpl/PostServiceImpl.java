@@ -1,6 +1,7 @@
 package com.pvt.blog.service.serviceImpl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Category;
@@ -8,6 +9,7 @@ import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.repository.CategoryRepository;
 import com.pvt.blog.repository.PostRepository;
+import com.pvt.blog.repository.TagRepository;
 import com.pvt.blog.repository.UserRepository;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.util.RedisUtil;
@@ -22,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -39,6 +42,8 @@ public class PostServiceImpl implements IPostService {
     private RedisUtil redisUtil;
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private TagRepository tagRepository;
     @Resource
     private PostRepository postRepository;
     @Resource
@@ -59,11 +64,31 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public ResultResponse<String> addPost(PostDTO postDTO) {
+        log.info("postDTO", postDTO);
+        Long[] tagIds = new Long[postDTO.getTagId().length];
+        for (int i = 0; i < tagIds.length; i++) {
+            tagIds[i] = Long.parseLong(postDTO.getTagId()[i]);
+        }
+        if (StrUtil.isEmpty(postDTO.getTitle())) {
+            return ResultResponse.fail(ResultEnum.FAIL_TITLE_EMPTY);
+        }
+        if (StrUtil.isEmpty(postDTO.getSummary())) {
+            return ResultResponse.fail(ResultEnum.FAIL_SUMMARY_EMPTY);
+        }
+        if (StrUtil.isEmpty(postDTO.getContent())) {
+            return ResultResponse.fail(ResultEnum.FAIL_CONTENT_EMPTY);
+        }
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
+        log.info("postDTO" + postDTO);
+
+        log.info("postasdfasdf" + post);
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
+        post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
         post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
-        Post save = postRepository.saveAndFlush(post);
-        return ResultResponse.success(ResultEnum.SUCCESS, "成功");
+        post.setTags(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
+        log.info("post",post);
+        postRepository.saveAndFlush(post);
+        return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");
     }
 
     @Override

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Table(name = "role")
 public class Role implements Serializable {
     @Transient
-    public static final Long serialVersionUid = -6849794470754623710L;
+    public static final Long SERIAL_VERSION_UID = -6849794470754623710L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

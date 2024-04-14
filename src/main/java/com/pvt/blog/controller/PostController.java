@@ -38,7 +38,7 @@ public class PostController {
      * @return ResultResponse<String>
      */
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResultResponse<String> addPost(@RequestBody PostDTO postDTO) {
         return postService.addPost(postDTO);
     }

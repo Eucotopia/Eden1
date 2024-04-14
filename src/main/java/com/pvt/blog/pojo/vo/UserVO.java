@@ -22,7 +22,7 @@ public class UserVO {
     /**
      * 昵称
      */
-    private String nickname;
+    private String email;
     /**
      * token
      */

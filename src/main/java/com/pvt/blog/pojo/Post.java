@@ -19,27 +19,27 @@ import java.util.Set;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Post implements Serializable {
-    private static final Long serialVersionUid = -6849794478244667710L;
+    private static final Long SERIAL_VERSION_UID = -6849794478244667710L;
     /**
      * 文章 ID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     /**
      * 文章标题
      */
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
     /**
      * 文章内容
      */
-    @Column(name = "content")
+    @Column(name = "content", nullable = false)
     private String content;
     /**
      * 摘要
      */
-    @Column(name = "summary")
+    @Column(name = "summary", nullable = false)
     private String summary;
     /**
      * 创建时间
@@ -74,7 +74,11 @@ public class Post implements Serializable {
      */
     @Column(name = "views")
     private Integer views;
-
+    /**
+     * 是否私密
+     */
+    @Column(name = "is_private")
+    private Integer isPrivate;
     /**
      * 评论数
      */
@@ -93,4 +97,10 @@ public class Post implements Serializable {
     )
     private Set<Category> categories;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Tag.class)
+    @JoinTable(name = "post_tag",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    )
+    private Set<Tag> tags;
 }

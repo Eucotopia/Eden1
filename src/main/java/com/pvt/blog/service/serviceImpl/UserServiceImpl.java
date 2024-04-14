@@ -48,7 +48,7 @@ public class UserServiceImpl implements IUserService {
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
         // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                userDto.getUsername(), userDto.getPassword()));
+                userDto.getEmail(), userDto.getPassword()));
 
         // 将登录对象存入 SecurityContextHolder 中
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -63,7 +63,7 @@ public class UserServiceImpl implements IUserService {
          JSONUtil.toBean(o,LoginDto.class);
         */
         // 查询数据库
-        User user = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
         UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token, user.getAvatar());
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
@@ -113,6 +113,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResultResponse<List<User>> getAllUser() {
         List<User> userList = userRepository.findAll();
+
         userList.forEach(user -> {
             user.setRole(user.getRoles().iterator().next().getName());
             user.setStatus(getStatues(user.getState()));
