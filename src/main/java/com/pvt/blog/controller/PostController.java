@@ -80,4 +80,11 @@ public class PostController {
     public ResultResponse<List<Post>> getHotPosts() {
         return postService.getHostPosts();
     }
+    /**
+     * 获取最近文章
+     */
+    @GetMapping("/recent")
+    public ResultResponse<List<Post>> getRecentPosts() {
+        return postService.getRecentPosts();
+    }
 }

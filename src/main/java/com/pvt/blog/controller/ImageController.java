@@ -2,7 +2,6 @@ package com.pvt.blog.controller;
 
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.util.FileUtil;
-import com.pvt.blog.util.ImageUtil;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
@@ -14,11 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.UUID;
 
 /**
  * @author LIWEI

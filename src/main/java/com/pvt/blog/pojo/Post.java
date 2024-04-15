@@ -84,9 +84,20 @@ public class Post implements Serializable {
      */
     @Column(name = "comments")
     private Integer comments;
+    /**
+     * 评分
+     */
     @Column(name = "rating")
     private Float rating;
-
+    /**
+     * 专栏
+     */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ColumnEntity.class)
+    @JoinTable(name = "post_column",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
+    )
+    private Set<ColumnEntity> columns;
     /**
      * 相关文章
      */

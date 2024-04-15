@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.*;
+
 import java.util.List;
 
 import java.util.List;
@@ -34,4 +36,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> getPostsByViewsAfter(Long views);
 
     List<Post> findByCategoriesInAndIdNot(Set<Category> categories, Long id);
+
+    Optional<List<Post>> findPostsByCreateTimeAfter(Date date);
 }
