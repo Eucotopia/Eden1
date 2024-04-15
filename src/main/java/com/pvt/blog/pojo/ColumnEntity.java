@@ -27,6 +27,11 @@ public class ColumnEntity {
     private String description;
     @Column(name = "avatar")
     private String avatar;
+    /**
+     * 专栏评分：各个文章的平均值
+     */
+    @Column(name = "rating")
+    private Long rating;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
     @JoinTable(name = "post_column",
             joinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id"),

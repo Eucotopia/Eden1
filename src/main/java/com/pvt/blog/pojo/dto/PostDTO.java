@@ -35,6 +35,10 @@ public class PostDTO implements Serializable {
      */
     private Long categoryId;
     /**
+     * 专栏 ID
+     */
+    private Long columnId;
+    /**
      * 标签
      */
     private String[] tagId;

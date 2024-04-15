@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/column")
 @Slf4j
@@ -19,8 +21,10 @@ public class ColumnController {
 
     @GetMapping("/{id}")
     public ResultResponse<ColumnEntity> getColumnById(@PathVariable Long id) {
-        log.info("栏目ID:{}", id);
         return columnService.getColumnById(id);
-
+    }
+    @GetMapping("/hot")
+    public ResultResponse<List<ColumnEntity>> getHotColumns(){
+        return columnService.getHotColumns();
     }
 }

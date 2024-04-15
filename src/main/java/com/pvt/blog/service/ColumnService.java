@@ -5,6 +5,7 @@ import com.pvt.blog.util.ResultResponse;
 import org.springframework.stereotype.Service;
 
 import java.io.Serial;
+import java.util.List;
 
 /**
  * @author LIWEI
@@ -12,4 +13,11 @@ import java.io.Serial;
 @Service
 public interface ColumnService {
     ResultResponse<ColumnEntity> getColumnById(Long id);
+
+    /**
+     * 获取热门专栏
+     *
+     * @return ResultResponse
+     */
+    ResultResponse<List<ColumnEntity>> getHotColumns();
 }

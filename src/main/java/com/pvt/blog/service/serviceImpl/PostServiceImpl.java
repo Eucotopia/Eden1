@@ -7,10 +7,8 @@ import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Category;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
-import com.pvt.blog.repository.CategoryRepository;
-import com.pvt.blog.repository.PostRepository;
-import com.pvt.blog.repository.TagRepository;
-import com.pvt.blog.repository.UserRepository;
+import com.pvt.blog.repository.*;
+import com.pvt.blog.service.ColumnService;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.util.RedisUtil;
 import com.pvt.blog.util.ResultResponse;
@@ -25,9 +23,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,6 +36,8 @@ public class PostServiceImpl implements IPostService {
 
     @Resource
     private RedisUtil redisUtil;
+    @Resource
+    private ColumnRepository columnRepository;
     @Resource
     private UserRepository userRepository;
     @Resource
@@ -79,14 +77,13 @@ public class PostServiceImpl implements IPostService {
             return ResultResponse.fail(ResultEnum.FAIL_CONTENT_EMPTY);
         }
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
-        log.info("postDTO" + postDTO);
-
-        log.info("postasdfasdf" + post);
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
         post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
         post.setTags(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
-        log.info("post",post);
+        if (postDTO.getColumnId() != null && postDTO.getColumnId() != 0) {
+            post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
+        }
         postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");
     }
@@ -146,6 +143,31 @@ public class PostServiceImpl implements IPostService {
         List<Post> byCategoriesAndIdNotIn = postRepository.findByCategoriesInAndIdNot(post.getCategories(), post.getId());
         System.out.println(byCategoriesAndIdNotIn);
         return ResultResponse.success(ResultEnum.SUCCESS, byCategoriesAndIdNotIn);
+    }
+
+    @Override
+    public ResultResponse<List<Post>> getRecentPosts() {
+        // 获取一周前的日期
+        Date oneWeekAgo = getDateBefore(7);
+        // 获取一个月前的日期
+        Date oneMonthAgo = getDateBefore(30);
+        // 获取一年前的日期
+        Date oneYearAgo = getDateBefore(365);
+        if (!postRepository.findPostsByCreateTimeAfter(oneWeekAgo).get().isEmpty()) {
+            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneWeekAgo).orElseThrow(() -> new RuntimeException("没有最近一周的文章文章")));
+        } else if (!postRepository.findPostsByCreateTimeAfter(oneMonthAgo).get().isEmpty()) {
+            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneMonthAgo).orElseThrow(() -> new RuntimeException("没有最近一个月文章")));
+        } else if (!postRepository.findPostsByCreateTimeAfter(oneYearAgo).get().isEmpty()) {
+            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneYearAgo).orElseThrow(() -> new RuntimeException("没有最近一年的文章")));
+        } else {
+            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findAll());
+        }
+    }
+
+    private Date getDateBefore(int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -days);
+        return calendar.getTime();
     }
 
     @Override
