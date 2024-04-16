@@ -28,10 +28,12 @@ class BlogApplicationTests {
     @Transactional
     void test() {
         List<Role> all2 = roleRepository.findAll();
-        System.out.println(all2);
-        all2.forEach((r) ->{
+        for (Role role : all2) {
+            System.out.println("user"+role.getUsers());
+        }
+        all2.forEach((r) -> {
             System.out.println(r.getName());
-            r.getUsers().forEach((u) ->{
+            r.getUsers().forEach((u) -> {
                 System.out.println(u.getUsername());
             });
         });
@@ -40,9 +42,9 @@ class BlogApplicationTests {
     @Test
     void fetchRole() {
         List<User> all = userRepository.findAll();
-        all.forEach((r) ->{
+        all.forEach((r) -> {
             System.out.println(r.getUsername());
-            r.getRoles().forEach((u) ->{
+            r.getRoles().forEach((u) -> {
                 System.out.println(u.getName());
             });
         });

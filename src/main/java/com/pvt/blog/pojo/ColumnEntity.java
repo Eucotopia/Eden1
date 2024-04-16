@@ -1,5 +1,6 @@
 package com.pvt.blog.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,11 +33,7 @@ public class ColumnEntity {
      */
     @Column(name = "rating")
     private Long rating;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
-    @JoinTable(name = "post_column",
-            joinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")
-    )
+    @JsonBackReference
+    @ManyToManyg(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "columns")
     private Set<Post> posts;
 }

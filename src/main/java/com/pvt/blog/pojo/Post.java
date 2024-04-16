@@ -1,8 +1,11 @@
 package com.pvt.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +18,8 @@ import java.util.Set;
  * @author eucotopia
  */
 @Table(name = "post")
-@Data
+@Setter
+@Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Post implements Serializable {
@@ -53,6 +57,26 @@ public class Post implements Serializable {
      */
     @Column(name = "is_top")
     private Integer isTop;
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", summary='" + summary + '\'' +
+                ", createTime=" + createTime +
+                ", isTop=" + isTop +
+                ", userId=" + userId +
+                ", cover='" + cover + '\'' +
+                ", likes=" + likes +
+                ", views=" + views +
+                ", isPrivate=" + isPrivate +
+                ", comments=" + comments +
+                ", rating=" + rating +
+                '}';
+    }
+
     /**
      * 用户 ID
      */
@@ -92,13 +116,13 @@ public class Post implements Serializable {
     /**
      * 专栏
      */
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ColumnEntity.class)
-//    @JoinTable(name = "post_column",
-//            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
-//    )
-//    @ManyToOne
-//    private ColumnEntity columns;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ColumnEntity.class)
+    @JoinTable(name = "post_column",
+            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
+    )
+    @JsonManagedReference
+    private Set<ColumnEntity> columns;
     /**
      * 相关文章
      */
@@ -107,6 +131,7 @@ public class Post implements Serializable {
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
+    @JsonManagedReference
     private Set<Category> categories;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Tag.class)
@@ -114,5 +139,6 @@ public class Post implements Serializable {
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
     )
+    @JsonManagedReference
     private Set<Tag> tags;
 }

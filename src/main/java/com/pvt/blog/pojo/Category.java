@@ -1,7 +1,10 @@
 package com.pvt.blog.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -11,7 +14,8 @@ import java.util.Set;
  * @author eucotopia
  */
 @Table(name = "category")
-@Data
+@Setter
+@Getter
 @Entity
 public class Category implements Serializable {
     @Serial
@@ -32,10 +36,7 @@ public class Category implements Serializable {
     /**
      * 文章
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
-    @JoinTable(name = "post_category",
-            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")
-    )
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categories")
     private Set<Post> posts;
 }
