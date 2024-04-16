@@ -1,10 +1,12 @@
 package com.pvt.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -14,7 +16,7 @@ import java.util.Set;
 @Data
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class ColumnEntity {
+public class ColumnEntity implements Serializable {
     private static final Long SERIAL_VERSION_UID = -6849794478244667710L;
     /**
      * 文章 ID
@@ -33,7 +35,7 @@ public class ColumnEntity {
      */
     @Column(name = "rating")
     private Long rating;
-    @JsonBackReference
-    @ManyToManyg(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "columns")
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "columns")
     private Set<Post> posts;
 }

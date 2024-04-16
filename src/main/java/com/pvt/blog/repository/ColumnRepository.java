@@ -1,6 +1,7 @@
 package com.pvt.blog.repository;
 
 import com.pvt.blog.pojo.ColumnEntity;
+import com.pvt.blog.pojo.vo.ColumnVO;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,5 @@ public interface ColumnRepository extends JpaRepository<ColumnEntity, Long> {
      * @param id Id
      * @return Optional<ColumnEntity>
      */
-    Optional<Set<ColumnEntity>> findColumnEntitiesById(Long id);
+    Optional<Set<ColumnVO>> findColumnEntitiesById(Long id);
 }

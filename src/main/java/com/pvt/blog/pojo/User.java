@@ -102,7 +102,6 @@ public class User implements Serializable {
     /**
      * 角色
      */
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",

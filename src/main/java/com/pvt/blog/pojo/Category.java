@@ -1,6 +1,7 @@
 package com.pvt.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class Category implements Serializable {
     /**
      * 文章
      */
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categories")
     private Set<Post> posts;
 }

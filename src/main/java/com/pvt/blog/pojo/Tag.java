@@ -1,6 +1,7 @@
 package com.pvt.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class Tag implements Serializable {
      */
     @Column(name = "name")
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class,mappedBy = "tags")
-    @JsonBackReference
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "tags")
+    @JsonIgnore
     private Set<Post> posts;
 }

@@ -1,6 +1,7 @@
 package com.pvt.blog.pojo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -36,7 +37,7 @@ public class Role implements Serializable {
                 ", name='" + name + '\'' +
                 '}';
     }
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "roles")
     private Set<User> users;
 }
