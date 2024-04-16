@@ -90,7 +90,7 @@ public class UserServiceImpl implements IUserService {
         newUser.setMotto("来点人生箴言吧");
         Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
         // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-        newUser.setRoles(Collections.singleton(role.orElse(null)));
+//        newUser.setRoles(Collections.singleton(role.orElse(null)));
         userRepository.save(newUser);
         return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
     }
@@ -113,11 +113,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResultResponse<List<User>> getAllUser() {
         List<User> userList = userRepository.findAll();
-
-        userList.forEach(user -> {
-            user.setRole(user.getRoles().iterator().next().getName());
-            user.setStatus(getStatues(user.getState()));
-        });
         return new ResultResponse<>(ResultEnum.SUCCESS, userList);
     }
 

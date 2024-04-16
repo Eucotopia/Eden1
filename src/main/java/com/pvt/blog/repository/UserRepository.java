@@ -4,6 +4,7 @@ import com.pvt.blog.pojo.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -21,6 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return User
      */
     Optional<User> findByUsername(String username);
+
 
     /**
      * 根据邮箱查询用户

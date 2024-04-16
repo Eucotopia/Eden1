@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,13 +29,13 @@ public class Category implements Serializable {
     @Column(name = "parent_id")
     private Long parentId;
 
-//    /**
-//     * 文章
-//     */
-//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
-//    @JoinTable(name = "post_category",
-//            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")
-//    )
-//    private Set<Post> posts;
+    /**
+     * 文章
+     */
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
+    @JoinTable(name = "post_category",
+            joinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")
+    )
+    private Set<Post> posts;
 }

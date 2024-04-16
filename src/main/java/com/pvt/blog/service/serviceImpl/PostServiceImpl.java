@@ -82,7 +82,7 @@ public class PostServiceImpl implements IPostService {
         post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
         post.setTags(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
         if (postDTO.getColumnId() != null && postDTO.getColumnId() != 0) {
-            post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
+//            post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
         }
         postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");

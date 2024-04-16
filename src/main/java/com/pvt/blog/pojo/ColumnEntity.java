@@ -32,7 +32,8 @@ public class ColumnEntity {
      */
     @Column(name = "rating")
     private Long rating;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class)
     @JoinTable(name = "post_column",
             joinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id")

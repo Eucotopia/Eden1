@@ -92,12 +92,13 @@ public class Post implements Serializable {
     /**
      * 专栏
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ColumnEntity.class)
-    @JoinTable(name = "post_column",
-            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
-    )
-    private Set<ColumnEntity> columns;
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = ColumnEntity.class)
+//    @JoinTable(name = "post_column",
+//            joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
+//    )
+//    @ManyToOne
+//    private ColumnEntity columns;
     /**
      * 相关文章
      */
