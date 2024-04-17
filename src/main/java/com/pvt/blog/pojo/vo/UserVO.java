@@ -12,10 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserVO {
     /**
-     * 用户 ID
-     */
-    private Integer id;
-    /**
      * 用户名
      */
     private String username;
@@ -26,10 +22,10 @@ public class UserVO {
     /**
      * token
      */
-    private String token;
+    private String authorization;
 
     /**
      * 用户头像
      */
-    private String image;
+    private String cover;
 }

@@ -9,22 +9,12 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserDTO {
-    private Long id;
-    private String name;
-    private String role;
-    private Integer age;
-    private String email;
-    private String avatar;
     /**
-     * 用户名
+     * email
      */
-    private String username;
+    private String email;
     /**
-     * 密码
+     * password
      */
     private String password;
-    /**
-     * 昵称
-     */
-    private String nickname;
 }

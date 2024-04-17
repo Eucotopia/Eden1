@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 生成 token
-        String token = jwtTokenProvider.generateToken(authentication);
+        String authorization = jwtTokenProvider.generateToken(authentication);
         /*
          TODO 登录成功后，将对象存入 redis 中
          JSON parse = JSONUtil.parse(loginDto);
@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
         */
         // 查询数据库
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token, user.getAvatar());
+        UserVO userVO = new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar());
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 
@@ -75,23 +75,23 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public ResultResponse<String> userRegister(UserDTO user) {
-        if (!Validator.isEmail(user.getUsername())) {
-            // email 格式不正确
-            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
-        }
-        if (userRepository.existsUserByUsername(user.getUsername())) {
-            // 注册的用户已存在
-            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
-        }
-        User newUser = new User();
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        newUser.setEmail(user.getUsername());
-        newUser.setUsername(user.getNickname());
-        newUser.setMotto("来点人生箴言吧");
-        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
-        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-//        newUser.setRoles(Collections.singleton(role.orElse(null)));
-        userRepository.save(newUser);
+//        if (!Validator.isEmail(user.getUsername())) {
+//            // email 格式不正确
+//            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+//        }
+//        if (userRepository.existsUserByUsername(user.getUsername())) {
+//            // 注册的用户已存在
+//            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+//        }
+//        User newUser = new User();
+//        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+//        newUser.setEmail(user.getUsername());
+//        newUser.setUsername(user.getNickname());
+//        newUser.setMotto("来点人生箴言吧");
+//        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
+//        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
+////        newUser.setRoles(Collections.singleton(role.orElse(null)));
+//        userRepository.save(newUser);
         return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
     }
 
