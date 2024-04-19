@@ -63,9 +63,9 @@ public class PostServiceImpl implements IPostService {
     @Override
     public ResultResponse<String> addPost(PostDTO postDTO) {
         log.info("postDTO", postDTO);
-        Long[] tagIds = new Long[postDTO.getTagId().length];
+        Long[] tagIds = new Long[postDTO.getTags().length];
         for (int i = 0; i < tagIds.length; i++) {
-            tagIds[i] = Long.parseLong(postDTO.getTagId()[i]);
+            tagIds[i] = Long.parseLong(postDTO.getTags()[i]);
         }
         if (StrUtil.isEmpty(postDTO.getTitle())) {
             return ResultResponse.fail(ResultEnum.FAIL_TITLE_EMPTY);
@@ -80,9 +80,9 @@ public class PostServiceImpl implements IPostService {
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
         post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
-        post.setTags(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
+        post.setTags1(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
         if (postDTO.getColumnId() != null && postDTO.getColumnId() != 0) {
-//            post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
+            post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
         }
         postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");

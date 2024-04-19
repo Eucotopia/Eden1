@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // 生成 token
-        String token = jwtTokenProvider.generateToken(authentication);
+        String authorization = jwtTokenProvider.generateToken(authentication);
         /*
          TODO 登录成功后，将对象存入 redis 中
          JSON parse = JSONUtil.parse(loginDto);
@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
         */
         // 查询数据库
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getId(), user.getUsername(), user.getEmail(), token, user.getAvatar());
+        UserVO userVO = new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar());
         return ResultResponse.success(ResultEnum.SUCCESS, userVO);
     }
 

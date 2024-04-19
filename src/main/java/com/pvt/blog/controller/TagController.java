@@ -8,11 +8,9 @@ import com.pvt.blog.service.ITagService;
 import com.pvt.blog.service.serviceImpl.TagServiceImpl;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -23,13 +21,11 @@ import java.util.Set;
 @RequestMapping("/tag")
 public class TagController {
     @Resource
-    private TagRepository tagRepository;
-    @Resource
     private ITagService tagService;
 
     @GetMapping
     public ResultResponse<List<Tag>> getTags() {
-        return ResultResponse.success(ResultEnum.SUCCESS, tagRepository.findAll());
+        return tagService.getTags();
     }
 
     /**
@@ -43,9 +39,8 @@ public class TagController {
         return tagService.getPostsByTag(id);
     }
 
-    @GetMapping("/a")
-    public ResultResponse<Set<Tag>> getTagByArray() {
-        Long[] a = new Long[]{1L, 2L};
-        return ResultResponse.success(ResultEnum.SUCCESS, tagRepository.findTagsByIdIn(List.of(a)).orElseThrow());
+    @PostMapping
+    public ResultResponse<String> addTag(@RequestParam("tags") String[] tags) {
+        return tagService.addTag(Arrays.asList(tags));
     }
 }

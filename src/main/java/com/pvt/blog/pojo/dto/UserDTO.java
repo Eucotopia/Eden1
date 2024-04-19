@@ -13,6 +13,9 @@ public class UserDTO {
     private String name;
     private String role;
     private Integer age;
+    /**
+     * 邮箱
+     */
     private String email;
     private String avatar;
     /**

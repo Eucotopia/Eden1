@@ -29,5 +29,5 @@ public interface ColumnRepository extends JpaRepository<ColumnEntity, Long> {
      * @param id Id
      * @return Optional<ColumnEntity>
      */
-    Optional<Set<ColumnVO>> findColumnEntitiesById(Long id);
+    Optional<Set<ColumnEntity>> findColumnEntitiesById(Long id);
 }

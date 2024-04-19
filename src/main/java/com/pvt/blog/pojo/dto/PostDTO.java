@@ -41,7 +41,7 @@ public class PostDTO implements Serializable {
     /**
      * 标签
      */
-    private String[] tagId;
+    private String[] tags;
     /**
      * 评分
      */
