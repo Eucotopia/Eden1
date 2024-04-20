@@ -75,23 +75,23 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public ResultResponse<String> userRegister(UserDTO user) {
-        if (!Validator.isEmail(user.getUsername())) {
-            // email 格式不正确
-            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
-        }
-        if (userRepository.existsUserByUsername(user.getUsername())) {
-            // 注册的用户已存在
-            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
-        }
-        User newUser = new User();
-        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        newUser.setEmail(user.getUsername());
-        newUser.setUsername(user.getNickname());
-        newUser.setMotto("来点人生箴言吧");
-        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
-        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-//        newUser.setRoles(Collections.singleton(role.orElse(null)));
-        userRepository.save(newUser);
+//        if (!Validator.isEmail(user.getUsername())) {
+//            // email 格式不正确
+//            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+//        }
+//        if (userRepository.existsUserByUsername(user.getUsername())) {
+//            // 注册的用户已存在
+//            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+//        }
+//        User newUser = new User();
+//        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+//        newUser.setEmail(user.getUsername());
+//        newUser.setUsername(user.getNickname());
+//        newUser.setMotto("来点人生箴言吧");
+//        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
+//        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
+////        newUser.setRoles(Collections.singleton(role.orElse(null)));
+//        userRepository.save(newUser);
         return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
     }
 
