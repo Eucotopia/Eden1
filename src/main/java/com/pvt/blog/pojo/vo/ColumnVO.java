@@ -14,11 +14,10 @@ import java.util.Set;
 @Data
 public class ColumnVO implements Serializable {
     private static final Long SERIAL_VERSION_UID = -6849794478244667710L;
-
     private Long id;
     private String name;
     private String description;
     private String avatar;
     private Long rating;
-    private Set<Post> posts;
+//    private Set<Post> posts;
 }

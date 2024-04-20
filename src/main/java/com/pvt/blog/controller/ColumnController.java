@@ -10,6 +10,7 @@ import com.pvt.blog.service.ColumnService;
 import com.pvt.blog.util.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author eucotopia
@@ -32,17 +34,23 @@ public class ColumnController {
     private ColumnRepository columnRepository;
 
     /**
-     * 获取专栏的所有文章
+     * get all post by column
      *
      * @param id id
      * @return ResultResponse<ColumnEntity>
      */
     @GetMapping("/{id}")
-    public ResultResponse<ColumnVO> getColumnById(@PathVariable Long id) {
-//        Set<ColumnEntity> columnEntitiesById = columnRepository.findColumnEntitiesById(id).orElseThrow(() -> new RuntimeException("asdf"));
-        ColumnEntity byId = columnRepository.findById(id).orElseThrow(() -> new RuntimeException("asdf"));
-        ColumnVO columnVO = BeanUtil.copyProperties(byId, ColumnVO.class);
-        return ResultResponse.success(ResultEnum.SUCCESS, columnVO);
+    public ResultResponse<List<Post>> getColumnById(@PathVariable Long id) {
+        ColumnEntity columnEntity = columnRepository.findById(id).orElseThrow(() -> new RuntimeException("not found column"));
+        List<Post> posts = columnEntity.getPosts().stream()
+                .map(postEntity -> BeanUtil.copyProperties(postEntity, Post.class))
+                .toList();
+        return ResultResponse.success(ResultEnum.SUCCESS, posts);
+    }
+
+    @GetMapping
+    public ResultResponse<List<ColumnVO>> getColumns() {
+        return columnService.getColumns();
     }
 
     @GetMapping("/hot")

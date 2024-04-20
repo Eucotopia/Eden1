@@ -22,4 +22,10 @@ public interface ColumnService {
      * @return ResultResponse
      */
     ResultResponse<List<ColumnVO>> getHotColumns();
+
+    /**
+     * get all columns
+     * @return ResultResponse<List<ColumnVO>>
+     */
+    ResultResponse<List<ColumnVO>> getColumns();
 }

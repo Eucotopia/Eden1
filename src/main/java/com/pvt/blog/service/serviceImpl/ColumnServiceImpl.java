@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -35,5 +36,13 @@ public class ColumnServiceImpl implements ColumnService {
         List<ColumnVO> columnEntities = BeanUtil.copyToList(columnEntityList, ColumnVO.class);
         System.out.println(columnEntities);
         return ResultResponse.success(ResultEnum.SUCCESS, columnEntities);
+    }
+
+    @Override
+    public ResultResponse<List<ColumnVO>> getColumns() {
+        // get all columns
+        List<ColumnEntity> columnEntities = columnRepository.findAll();
+        List<ColumnVO> columns = BeanUtil.copyToList(columnEntities, ColumnVO.class);
+        return ResultResponse.success(ResultEnum.SUCCESS, columns);
     }
 }
