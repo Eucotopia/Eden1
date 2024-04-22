@@ -4,7 +4,7 @@ import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Role;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.repository.RoleRepository;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController

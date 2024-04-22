@@ -1,12 +1,10 @@
 package com.pvt.blog.controller;
 
 import com.pvt.blog.enums.ResultEnum;
-import com.pvt.blog.util.FileUtil;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.FileUtil;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

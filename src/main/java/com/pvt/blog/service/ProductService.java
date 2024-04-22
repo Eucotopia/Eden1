@@ -1,6 +1,6 @@
 package com.pvt.blog.service;
 
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import org.springframework.stereotype.Service;
 import com.pvt.blog.pojo.Product;
 

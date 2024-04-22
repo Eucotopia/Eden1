@@ -2,14 +2,13 @@ package com.pvt.blog.controller;
 
 import com.pvt.blog.pojo.Category;
 import com.pvt.blog.service.ICategoryService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author LIWEI

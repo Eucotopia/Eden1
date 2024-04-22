@@ -1,4 +1,4 @@
-package com.pvt.blog.util;
+package com.pvt.blog.utils;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

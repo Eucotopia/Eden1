@@ -1,9 +1,6 @@
-package com.pvt.blog.util;
+package com.pvt.blog.utils;
 
 import cn.hutool.core.lang.UUID;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 

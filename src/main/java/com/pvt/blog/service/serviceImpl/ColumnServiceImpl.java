@@ -3,19 +3,16 @@ package com.pvt.blog.service.serviceImpl;
 import cn.hutool.core.bean.BeanUtil;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.ColumnEntity;
-import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.vo.ColumnVO;
 import com.pvt.blog.repository.ColumnRepository;
 import com.pvt.blog.service.ColumnService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 
 @Service

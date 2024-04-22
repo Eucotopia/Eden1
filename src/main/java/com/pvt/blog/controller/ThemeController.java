@@ -1,7 +1,7 @@
 package com.pvt.blog.controller;
 
 import com.pvt.blog.service.IThemeService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

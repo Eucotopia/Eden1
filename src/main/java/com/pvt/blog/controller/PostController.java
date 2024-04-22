@@ -3,10 +3,9 @@ package com.pvt.blog.controller;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.service.IPostService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

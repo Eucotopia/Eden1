@@ -1,4 +1,4 @@
-package com.pvt.blog.util;
+package com.pvt.blog.utils;
 
 import java.util.Collection;
 import java.util.List;

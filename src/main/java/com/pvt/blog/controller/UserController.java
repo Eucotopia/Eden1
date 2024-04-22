@@ -3,6 +3,7 @@ package com.pvt.blog.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
@@ -11,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import com.pvt.blog.service.IUserService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 
 import jakarta.annotation.Resource;
 
@@ -27,6 +28,24 @@ public class UserController {
 
     @Resource
     private UserRepository userRepository;
+
+    @GetMapping("/info")
+    public ResultResponse<String> getUserInfo() {
+        User user = new User();
+        if (user.getUsername() == null) {
+            throw new NullPointerException("用户不存在");
+        }
+        if (user == null) {
+            return ResultResponse.error(ResultEnum.NULL_POINT_EXCEPTION);
+        }
+        return ResultResponse.success(ResultEnum.SUCCESS, user.getUsername());
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        int a = 1 / 0;
+        return "hello";
+    }
 
     // 用户登录
     @PostMapping("/login")

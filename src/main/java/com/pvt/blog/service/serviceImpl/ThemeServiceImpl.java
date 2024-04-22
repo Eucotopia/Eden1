@@ -4,7 +4,7 @@ import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Theme;
 import com.pvt.blog.repository.ThemeRepository;
 import com.pvt.blog.service.IThemeService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 

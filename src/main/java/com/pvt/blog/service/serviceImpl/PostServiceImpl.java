@@ -4,17 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
-import com.pvt.blog.pojo.Category;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.repository.*;
-import com.pvt.blog.service.ColumnService;
 import com.pvt.blog.service.IPostService;
-import com.pvt.blog.util.RedisUtil;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.RedisUtil;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Around;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author eucotopia
@@ -68,13 +62,13 @@ public class PostServiceImpl implements IPostService {
             tagIds[i] = Long.parseLong(postDTO.getTags()[i]);
         }
         if (StrUtil.isEmpty(postDTO.getTitle())) {
-            return ResultResponse.fail(ResultEnum.FAIL_TITLE_EMPTY);
+            return ResultResponse.error(ResultEnum.FAIL_TITLE_EMPTY);
         }
         if (StrUtil.isEmpty(postDTO.getSummary())) {
-            return ResultResponse.fail(ResultEnum.FAIL_SUMMARY_EMPTY);
+            return ResultResponse.error(ResultEnum.FAIL_SUMMARY_EMPTY);
         }
         if (StrUtil.isEmpty(postDTO.getContent())) {
-            return ResultResponse.fail(ResultEnum.FAIL_CONTENT_EMPTY);
+            return ResultResponse.error(ResultEnum.FAIL_CONTENT_EMPTY);
         }
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);

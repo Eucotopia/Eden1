@@ -1,4 +1,4 @@
-package com.pvt.blog.util;
+package com.pvt.blog.utils;
 
 import com.pvt.blog.enums.ResultEnum;
 import lombok.Data;
@@ -20,7 +20,7 @@ public class ResultResponse<T> {
      * 返回结果
      */
     private T data;
-    
+
     public ResultResponse(ResultEnum resultEnum, T data) {
         this(resultEnum);
         this.data = data;
@@ -35,7 +35,7 @@ public class ResultResponse<T> {
         return new ResultResponse<>(resultEnum, data);
     }
 
-    public static <T> ResultResponse<T> fail(ResultEnum resultEnum) {
+    public static <T> ResultResponse<T> error(ResultEnum resultEnum) {
         return new ResultResponse<>(resultEnum);
     }
 

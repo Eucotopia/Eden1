@@ -2,7 +2,7 @@ package com.pvt.blog.service;
 
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.Tag;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

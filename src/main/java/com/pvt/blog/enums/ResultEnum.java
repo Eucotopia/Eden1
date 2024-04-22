@@ -31,7 +31,9 @@ public enum ResultEnum {
     FAIL_EMAIL_FORMAT(410, "邮箱格式错误!!!"),
     FAIL_TITLE_EMPTY(411, "标题为空!!!"),
     FAIL_SUMMARY_EMPTY(412, "摘要为空!!!"),
-    FAIL_CONTENT_EMPTY(412, "内容为空!!!");
+    FAIL_USER_NOT_EXIST(413, "用户不存在!!!"),
+    FAIL_CONTENT_EMPTY(414, "内容为空"),
+    NULL_POINT_EXCEPTION(415, "空指针异常");
 
     /**
      * 状态码

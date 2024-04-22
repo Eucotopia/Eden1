@@ -1,14 +1,11 @@
 package com.pvt.blog.service;
 
 import com.pvt.blog.pojo.ColumnEntity;
-import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.vo.ColumnVO;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import org.springframework.stereotype.Service;
 
-import java.io.Serial;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author LIWEI

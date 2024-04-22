@@ -1,6 +1,6 @@
 package com.pvt.blog.filter;
 
-import com.pvt.blog.util.JwtTokenProvider;
+import com.pvt.blog.utils.JwtTokenProvider;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;

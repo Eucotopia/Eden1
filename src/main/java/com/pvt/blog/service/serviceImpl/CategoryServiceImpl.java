@@ -4,12 +4,11 @@ import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Category;
 import com.pvt.blog.repository.CategoryRepository;
 import com.pvt.blog.service.ICategoryService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author LIWEI

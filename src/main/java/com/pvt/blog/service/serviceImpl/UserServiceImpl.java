@@ -1,31 +1,24 @@
 package com.pvt.blog.service.serviceImpl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.lang.Validator;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
 import com.pvt.blog.repository.RoleRepository;
 import com.pvt.blog.repository.UserRepository;
-import com.pvt.blog.common.RoleConstant;
 import com.pvt.blog.enums.ResultEnum;
 
-import com.pvt.blog.pojo.Role;
 import com.pvt.blog.service.IUserService;
-import com.pvt.blog.util.JwtTokenProvider;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.JwtTokenProvider;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author LW
@@ -46,26 +39,22 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
-        // 在 loadUserByUsername 中已经存储登录对象，在这里只需要进行校验即可
+        // get authentication
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getEmail(), userDto.getPassword()));
 
-        // 将登录对象存入 SecurityContextHolder 中
+        // add authentication to SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // 生成 token
+        // generate authorization
         String authorization = jwtTokenProvider.generateToken(authentication);
-        /*
-         TODO 登录成功后，将对象存入 redis 中
-         JSON parse = JSONUtil.parse(loginDto);
-         redisTemplate.opsForValue().setIfAbsent(loginDto.getUsername(),parse, RedisConstant.USER_TTL, TimeUnit.HOURS);
-         Object o = redisTemplate.opsForValue().get(loginDto.getUsername());
-         JSONUtil.toBean(o,LoginDto.class);
-        */
-        // 查询数据库
+        if (userRepository.findByEmail(authentication.getName()).isEmpty()) {
+            return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
+        }
+        // get user information
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        UserVO userVO = new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar());
-        return ResultResponse.success(ResultEnum.SUCCESS, userVO);
+
+        return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
     }
 
     /*

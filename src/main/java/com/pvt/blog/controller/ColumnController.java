@@ -7,19 +7,15 @@ import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.vo.ColumnVO;
 import com.pvt.blog.repository.ColumnRepository;
 import com.pvt.blog.service.ColumnService;
-import com.pvt.blog.util.ResultResponse;
+import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author eucotopia
