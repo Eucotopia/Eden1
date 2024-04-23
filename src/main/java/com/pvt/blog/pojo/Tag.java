@@ -39,7 +39,7 @@ public class Tag implements Serializable {
     public Tag(String name) {
         this.name = name;
     }
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "tags1")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "tags")
     @JsonIgnore
     private Set<Post> posts;
 }

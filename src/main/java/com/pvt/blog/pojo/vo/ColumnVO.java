@@ -19,5 +19,5 @@ public class ColumnVO implements Serializable {
     private String description;
     private String avatar;
     private Long rating;
-//    private Set<Post> posts;
+    private Set<Post> posts;
 }

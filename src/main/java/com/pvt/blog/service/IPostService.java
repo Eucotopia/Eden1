@@ -2,6 +2,7 @@ package com.pvt.blog.service;
 
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.utils.ResultResponse;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 @Service
 public interface IPostService {
-    ResultResponse<List<Post>> findAll(Integer page, Integer size);
+    ResultResponse<List<PostVO>> findAll(Integer page, Integer size);
 
     ResultResponse<String> addPost(PostDTO postDTO);
 

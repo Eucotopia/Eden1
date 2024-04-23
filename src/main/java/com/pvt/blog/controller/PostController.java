@@ -2,6 +2,7 @@ package com.pvt.blog.controller;
 
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
@@ -26,7 +27,7 @@ public class PostController {
      * @return ResultResponse<List < Post>>
      */
     @GetMapping("/{page}/{size}")
-    public ResultResponse<List<Post>> getAllPost(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
+    public ResultResponse<List<PostVO>> getAllPost(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
         return postService.findAll(page, size);
     }
 

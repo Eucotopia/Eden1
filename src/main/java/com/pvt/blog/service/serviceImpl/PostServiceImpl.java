@@ -6,12 +6,14 @@ import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.repository.*;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.utils.RedisUtil;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author eucotopia
@@ -42,16 +45,17 @@ public class PostServiceImpl implements IPostService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public ResultResponse<List<Post>> findAll(Integer page, Integer size) {
+    public ResultResponse<List<PostVO>> findAll(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Post> all = postRepository.findAll(pageable);
-        System.out.println("TotalPages" + all.getTotalPages());
-        List<Post> content = all.getContent();
-        for (Post post : content) {
-            System.out.println(post.getId());
-        }
-        System.out.println("content:" + all.getContent());
-        return ResultResponse.success(ResultEnum.SUCCESS, all.getContent());
+        Page<Post> postPage = postRepository.findAll(pageable);
+        List<PostVO> collect = postPage.getContent().stream().map(post -> {
+            PostVO postVO = new PostVO();
+            BeanUtil.copyProperties(post, postVO);
+            postVO.setIsTop(post.getIsTop() == 1);
+            postVO.setIsPrivate(post.getIsPrivate() == 1);
+            return postVO;
+        }).collect(Collectors.toList());
+        return ResultResponse.success(ResultEnum.SUCCESS, collect);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class PostServiceImpl implements IPostService {
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
         post.setCategories(categoryRepository.getCategoriesById(Math.toIntExact(postDTO.getCategoryId())).orElseThrow(() -> new RuntimeException("没有该分类")));
-        post.setTags1(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
+        post.setTags(tagRepository.findTagsByIdIn(List.of(tagIds)).orElseThrow(() -> new RuntimeException("没有该标签")));
         if (postDTO.getColumnId() != null && postDTO.getColumnId() != 0) {
             post.setColumns(columnRepository.findColumnEntitiesById(postDTO.getColumnId()).orElseThrow(() -> new RuntimeException("没有该专栏")));
         }
@@ -166,7 +170,8 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public ResultResponse<List<Post>> getHostPosts() {
-        List<Post> postsByViewsAfter = postRepository.getPostsByViewsAfter(20L);
+        Pageable pageable = PageRequest.of(0, 4);
+        List<Post> postsByViewsAfter = postRepository.getPostsByOrderByViewsDesc(pageable).orElseThrow(() -> new RuntimeException("没有热门文章"));
         return ResultResponse.success(ResultEnum.SUCCESS, postsByViewsAfter);
     }
 }
