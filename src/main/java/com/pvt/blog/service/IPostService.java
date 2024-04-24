@@ -53,4 +53,6 @@ public interface IPostService {
      * @return ResultResponse<List < Post>>
      */
     ResultResponse<List<Post>> getRecentPosts();
+
+    ResultResponse<String> deletePost(Long id);
 }

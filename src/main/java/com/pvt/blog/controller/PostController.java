@@ -98,4 +98,9 @@ public class PostController {
     public ResultResponse<List<Post>> getRecentPosts() {
         return postService.getRecentPosts();
     }
+
+    @DeleteMapping("/{id}")
+    public ResultResponse<String> deletePost(@PathVariable("id") Long id) {
+        return postService.deletePost(id);
+    }
 }

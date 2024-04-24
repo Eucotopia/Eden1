@@ -55,6 +55,7 @@ public class PostServiceImpl implements IPostService {
             postVO.setIsPrivate(post.getIsPrivate() == 1);
             return postVO;
         }).collect(Collectors.toList());
+        System.out.println("get all Post"+collect);
         return ResultResponse.success(ResultEnum.SUCCESS, collect);
     }
 
@@ -141,6 +142,17 @@ public class PostServiceImpl implements IPostService {
         } else {
             return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findAll());
         }
+    }
+
+    /**
+     * 先删除 post_column、post_tag、post_category 三张表中的数据
+     * @param id
+     * @return
+     */
+    @Override
+    public ResultResponse<String> deletePost(Long id) {
+        postRepository.deleteById(id);
+        return ResultResponse.success(ResultEnum.SUCCESS, "删除成功");
     }
 
     private Date getDateBefore(int days) {
