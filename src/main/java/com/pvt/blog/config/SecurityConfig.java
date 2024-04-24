@@ -28,8 +28,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Resource
-    private CustomAccessDeniedHandler customAccessDeniedHandler;
+//    @Resource
+//    private CustomAccessDeniedHandler customAccessDeniedHandler;
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
@@ -66,8 +66,8 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return customAccessDeniedHandler;
-    }
+//    @Bean
+//    public AccessDeniedHandler accessDeniedHandler() {
+//        return customAccessDeniedHandler;
+//    }
 }

@@ -1,14 +1,14 @@
 package com.pvt.blog.config;
 
-import cn.hutool.log.Log;
-import com.pvt.blog.pojo.User;
+import cn.hutool.core.util.NumberUtil;
 import com.pvt.blog.repository.UserRepository;
+import com.pvt.blog.utils.RedisUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import reactor.util.annotation.NonNull;
 
@@ -21,8 +21,11 @@ import java.util.Optional;
 @Slf4j
 public class SecurityAuditorAware implements AuditorAware<Integer> {
     @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+    @Resource
     private UserRepository userRepository;
-
+    @Resource
+    private RedisUtil redisUtil;
     @Override
     public @NonNull Optional<Integer> getCurrentAuditor() {
         // 获取当前登录用户
@@ -38,8 +41,10 @@ public class SecurityAuditorAware implements AuditorAware<Integer> {
         String username = userDetail.getUsername();
         log.info("username:{}", username);
         // 查询用户
-        User user = userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username:" + username));
-        log.info("userId:{}", user.getId());
-        return Optional.ofNullable(user.getId());
+        Object o = redisUtil.get("currentUser");
+        if (NumberUtil.isInteger(o.toString())){
+            return Optional.of(Integer.valueOf(o.toString()));
+        }
+        return Optional.empty();
     }
 }

@@ -9,9 +9,11 @@ import com.pvt.blog.enums.ResultEnum;
 
 import com.pvt.blog.service.IUserService;
 import com.pvt.blog.utils.JwtTokenProvider;
+import com.pvt.blog.utils.RedisUtil;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,8 @@ public class UserServiceImpl implements IUserService {
     private AuthenticationManager authenticationManager;
     @Resource
     private JwtTokenProvider jwtTokenProvider;
+    @Resource
+    private RedisUtil redisUtil;
 
     @Resource
     private UserRepository userRepository;
@@ -53,6 +57,8 @@ public class UserServiceImpl implements IUserService {
         }
         // get user information
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
+        redisUtil.setCacheObject("currentUser", user.getId());
+
 
         return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
     }

@@ -6,6 +6,7 @@ import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.service.IPostService;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,16 +35,25 @@ public class PostController {
     /**
      * 添加博客
      *
-     * @param postDTO postDTO
+     * @param postDTO post
      * @return ResultResponse<String>
      */
     @PostMapping
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResultResponse<String> addPost(@RequestBody PostDTO postDTO) {
-        log.info("{}", postDTO);
         return postService.addPost(postDTO);
     }
-
+    /**
+     * 修改博客
+     *
+     * @param postDTO post
+     * @return ResultResponse<String>
+     */
+    @PutMapping
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResultResponse<String> updatePost(@RequestBody PostDTO postDTO) {
+        return postService.addPost(postDTO);
+    }
     /**
      * 根据id查询博客
      */

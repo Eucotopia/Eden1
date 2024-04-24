@@ -8,7 +8,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.repository.Modifying;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -51,6 +54,7 @@ public class Post implements Serializable {
      * 创建时间
      */
     @CreatedDate
+    @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @Column(name = "create_time")
     private Date createTime;
@@ -83,6 +87,7 @@ public class Post implements Serializable {
      * 用户 ID
      */
     @CreatedBy
+    @LastModifiedBy
     @Column(name = "user_id")
     private Integer userId;
     /**

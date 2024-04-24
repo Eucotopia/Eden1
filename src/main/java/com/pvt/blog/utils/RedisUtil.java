@@ -35,8 +35,8 @@ public class RedisUtil {
      * @param key
      * @return
      */
-    public String get(String key) {
-        return (String) redisTemplate.opsForValue().get(key);
+    public Object get(String key) {
+        return  redisTemplate.opsForValue().get(key);
     }
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -80,7 +80,11 @@ public class RedisUtil {
      * @return true 存在 false不存在
      */
     public Boolean hasKey(String key) {
-        return redisTemplate.hasKey(key);
+        try {
+            return redisTemplate.hasKey(key);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 
