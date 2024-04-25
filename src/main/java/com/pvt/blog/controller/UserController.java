@@ -29,24 +29,6 @@ public class UserController {
     @Resource
     private UserRepository userRepository;
 
-    @GetMapping("/info")
-    public ResultResponse<String> getUserInfo() {
-        User user = new User();
-        if (user.getUsername() == null) {
-            throw new NullPointerException("用户不存在");
-        }
-        if (user == null) {
-            return ResultResponse.error(ResultEnum.NULL_POINT_EXCEPTION);
-        }
-        return ResultResponse.success(ResultEnum.SUCCESS, user.getUsername());
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        int a = 1 / 0;
-        return "hello";
-    }
-
     // 用户登录
     @PostMapping("/login")
     public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {

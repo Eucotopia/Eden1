@@ -52,6 +52,7 @@ public class UserServiceImpl implements IUserService {
 
         // generate authorization
         String authorization = jwtTokenProvider.generateToken(authentication);
+
         if (userRepository.findByEmail(authentication.getName()).isEmpty()) {
             return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
         }

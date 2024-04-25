@@ -5,6 +5,8 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,7 +30,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-//    @Resource
+    //    @Resource
 //    private CustomAccessDeniedHandler customAccessDeniedHandler;
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -37,6 +39,10 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Resource
+    public RedisConnectionFactory redisConnectionFactory;
+
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -53,9 +59,9 @@ public class SecurityConfig {
                 })
                 .authorizeHttpRequests((authorize) -> {
                     authorize
-                            .requestMatchers("/user/login").permitAll()
-                            .requestMatchers("/user").permitAll()
-                            .anyRequest().permitAll();
+                            .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                            .anyRequest().authenticated();
                 });
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -66,8 +72,5 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        return customAccessDeniedHandler;
-//    }
+
 }

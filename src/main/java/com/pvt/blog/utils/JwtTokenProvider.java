@@ -22,6 +22,7 @@ public class JwtTokenProvider {
     public static final Long JWT_EXPIRATION_DATE = 604800000L;
     // generate JWT token
     public String generateToken(Authentication authentication){
+        // get currentUser email
         String email = authentication.getName();
         Date currentDate = new Date();
         Date  expireDate = new Date(currentDate.getTime()+JWT_EXPIRATION_DATE);

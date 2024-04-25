@@ -15,8 +15,7 @@ import java.util.Set;
  * @author eucotopia
  */
 @Table(name = "category")
-@Setter
-@Getter
+@Data
 @Entity
 public class Category implements Serializable {
     @Serial
