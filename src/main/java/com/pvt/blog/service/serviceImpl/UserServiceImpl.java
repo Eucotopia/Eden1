@@ -59,8 +59,6 @@ public class UserServiceImpl implements IUserService {
         // get user information
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
         redisUtil.setCacheObject("currentUser", user.getId());
-
-
         return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
     }
 
