@@ -39,7 +39,6 @@ public class UserController {
     public Optional<User> getUserById(@PathVariable("id") Integer id) {
         return userRepository.findById(Long.valueOf(id));
     }
-
     // 用户注册
     @PostMapping
     public ResultResponse<String> userRegister(@RequestBody UserDTO userDto) {

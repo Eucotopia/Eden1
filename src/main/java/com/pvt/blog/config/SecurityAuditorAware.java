@@ -36,10 +36,10 @@ public class SecurityAuditorAware implements AuditorAware<Integer> {
             return Optional.empty();
         }
         // 获取当前登录用户
-        org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
+//        org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         // 获取当前登录用户的用户名
-        String username = userDetail.getUsername();
-        log.info("username:{}", username);
+//        String username = userDetail.getUsername();
+//        log.info("username:{}", username);
         // 查询用户
         Object o = redisUtil.get("currentUser");
         if (NumberUtil.isInteger(o.toString())){

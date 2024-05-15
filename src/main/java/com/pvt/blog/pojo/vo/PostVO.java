@@ -45,6 +45,8 @@ public class PostVO {
 
     private Float rating;
 
+    private Integer status;
+
     private Set<ColumnEntity> columns;
 
     private Set<Category> categories;

@@ -28,7 +28,6 @@ import java.util.Set;
 public class PostDTO implements Serializable {
     private static final Long SERIAL_VERSION_UID = -6849794478244667710L;
 
-
     /**
      * 文章 ID
      */
@@ -91,7 +90,6 @@ public class PostDTO implements Serializable {
     /**
      * 相关文章
      */
-
     private Set<Category> categories;
 
     private Set<Tag> tags;

@@ -33,6 +33,7 @@ public enum ResultEnum {
     FAIL_SUMMARY_EMPTY(412, "摘要为空!!!"),
     FAIL_USER_NOT_EXIST(413, "用户不存在!!!"),
     FAIL_CONTENT_EMPTY(414, "内容为空"),
+    FAIL_FAQ_EMPTY(416, "问题不存在"),
     NULL_POINT_EXCEPTION(415, "空指针异常");
 
     /**

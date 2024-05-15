@@ -72,11 +72,8 @@ public class User implements Serializable {
     /**
      * 账号状态
      */
-    @Column(name = "state")
-    private Integer state;
-
-    @Transient
-    private String status;
+    @Column(name = "status")
+    private Integer status;
 
     @Override
     public String toString() {
@@ -89,7 +86,7 @@ public class User implements Serializable {
                 ", motto='" + motto + '\'' +
                 ", createTime=" + createTime +
                 ", avatar='" + avatar + '\'' +
-                ", state=" + state +
+                ", status=" + status +
                 ", status='" + status + '\'' +
                 ", address='" + address + '\'' +
                 '}';

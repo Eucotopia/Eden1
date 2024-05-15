@@ -64,6 +64,13 @@ public class Post implements Serializable {
     @Column(name = "is_top")
     private Integer isTop;
 
+    /**
+     * 文章状态
+     */
+    @Column(name = "status")
+    private Integer status;
+
+
     @Override
     public String toString() {
         return "Post{" +
@@ -123,7 +130,7 @@ public class Post implements Serializable {
     /**
      * 专栏
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = ColumnEntity.class)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.REMOVE}, targetEntity = ColumnEntity.class)
     @JoinTable(name = "post_column",
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "column_id", referencedColumnName = "id")
@@ -132,14 +139,14 @@ public class Post implements Serializable {
     /**
      * 相关文章
      */
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Category.class)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH}, targetEntity = Category.class)
     @JoinTable(name = "post_category",
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
     private Set<Category> categories;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Tag.class)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.REMOVE}, targetEntity = Tag.class)
     @JoinTable(name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")

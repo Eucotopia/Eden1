@@ -1,5 +1,6 @@
 package com.pvt.blog.service.serviceImpl;
 
+import cn.hutool.core.lang.Validator;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
@@ -43,10 +44,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
+
         // get authentication
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getEmail(), userDto.getPassword()));
-
         // add authentication to SecurityContextHolder
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
