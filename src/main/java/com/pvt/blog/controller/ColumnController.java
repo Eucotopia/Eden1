@@ -10,10 +10,7 @@ import com.pvt.blog.service.ColumnService;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,5 +49,10 @@ public class ColumnController {
     @GetMapping("/hot")
     public ResultResponse<List<ColumnVO>> getHotColumns() {
         return columnService.getHotColumns();
+    }
+
+    @PostMapping
+    public ResultResponse<String> addColumn(@RequestBody ColumnEntity columnEntity) {
+        return columnService.addColumn(columnEntity);
     }
 }

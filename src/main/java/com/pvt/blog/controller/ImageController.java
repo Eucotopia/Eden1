@@ -47,6 +47,6 @@ public class ImageController {
 //            e.printStackTrace();
 //        }
         String fileName = fileUtil.uploadImage(file);
-        return ResultResponse.success(ResultEnum.SUCCESS, "http://120.25.191.26/" + "/image/" + fileName);
+        return ResultResponse.success(ResultEnum.SUCCESS, "http://47.119.161.226" + "/image/" + fileName);
     }
 }

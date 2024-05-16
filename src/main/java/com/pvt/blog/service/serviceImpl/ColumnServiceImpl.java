@@ -42,4 +42,10 @@ public class ColumnServiceImpl implements ColumnService {
         List<ColumnVO> columns = BeanUtil.copyToList(columnEntities, ColumnVO.class);
         return ResultResponse.success(ResultEnum.SUCCESS, columns);
     }
+
+    @Override
+    public ResultResponse<String> addColumn(ColumnEntity columnEntity) {
+        columnRepository.save(columnEntity);
+        return ResultResponse.success(ResultEnum.SUCCESS, "添加栏目成功");
+    }
 }

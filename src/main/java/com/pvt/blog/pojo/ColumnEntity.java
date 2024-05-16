@@ -19,22 +19,36 @@ import java.util.Set;
 public class ColumnEntity implements Serializable {
     private static final Long SERIAL_VERSION_UID = -6849794478244667710L;
     /**
-     * 文章 ID
+     * column id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @jakarta.persistence.Column(name = "name")
+
+    /**
+     * column name
+     */
+    @Column(name = "name")
     private String name;
-    @jakarta.persistence.Column(name = "description")
+
+    /**
+     * column description
+     */
+    @Column(name = "description")
     private String description;
+
+    /**
+     * column avatar
+     */
     @Column(name = "avatar")
     private String avatar;
+
     /**
-     * 专栏评分：各个文章的平均值
+     * column rating
      */
     @Column(name = "rating")
     private Long rating;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "columns")
     private Set<Post> posts;

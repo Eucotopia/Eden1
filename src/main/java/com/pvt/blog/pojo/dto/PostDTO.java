@@ -58,6 +58,12 @@ public class PostDTO implements Serializable {
      * 用户 ID
      */
     private Integer userId;
+
+    /**
+     * 文章状态
+     */
+    private Integer status;
+
     /**
      * 博客封面
      */

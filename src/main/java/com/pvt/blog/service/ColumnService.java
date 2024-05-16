@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 public interface ColumnService {
     ResultResponse<ColumnEntity> getColumnById(Long id);
+
     /**
      * 获取热门专栏
      *
@@ -22,7 +23,16 @@ public interface ColumnService {
 
     /**
      * get all columns
+     *
      * @return ResultResponse<List<ColumnVO>>
      */
     ResultResponse<List<ColumnVO>> getColumns();
+
+    /**
+     * add column
+     *
+     * @param columnEntity column
+     * @return ResultResponse<String>
+     */
+    ResultResponse<String> addColumn(ColumnEntity columnEntity);
 }

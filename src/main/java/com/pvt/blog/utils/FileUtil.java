@@ -16,7 +16,7 @@ import java.util.Objects;
 public class FileUtil {
 
     public String uploadImage(MultipartFile file) throws IOException {
-        String path = "/usr/data/image/";
+        String path = "/usr/image/";
         String suffix = Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf("."));
         String fileName = UUID.randomUUID() + suffix;
         Files.copy(file.getInputStream(), Path.of(path + fileName));
