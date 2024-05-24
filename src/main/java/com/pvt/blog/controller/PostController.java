@@ -60,7 +60,6 @@ public class PostController {
     @PostMapping
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResultResponse<String> addPost(@RequestBody PostDTO postDTO) {
-        System.out.println("postDTO" + postDTO);
         return postService.addPost(postDTO);
     }
 

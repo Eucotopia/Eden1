@@ -30,4 +30,8 @@ public interface ColumnRepository extends JpaRepository<ColumnEntity, Long> {
      * @return Optional<ColumnEntity>
      */
     Optional<Set<ColumnEntity>> findColumnEntitiesById(Long id);
+
+
+    Optional<Set<ColumnEntity>> findColumnEntitiesByPostsNotNull();
+
 }

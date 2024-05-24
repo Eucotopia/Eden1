@@ -62,7 +62,7 @@ public class PostDTO implements Serializable {
     /**
      * 文章状态
      */
-    private Integer status;
+    private Boolean status;
 
     /**
      * 博客封面

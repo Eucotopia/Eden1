@@ -29,6 +29,12 @@ public interface ColumnService {
     ResultResponse<List<ColumnVO>> getColumns();
 
     /**
+     * get column count
+     * @return ResultResponse<Integer>
+     */
+    ResultResponse<Long> getCount();
+
+    /**
      * add column
      *
      * @param columnEntity column

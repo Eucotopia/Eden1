@@ -55,4 +55,9 @@ public class ColumnController {
     public ResultResponse<String> addColumn(@RequestBody ColumnEntity columnEntity) {
         return columnService.addColumn(columnEntity);
     }
+
+    @GetMapping("/count")
+    public ResultResponse<Long> getCount(){
+        return ResultResponse.success(ResultEnum.SUCCESS, columnRepository.count());
+    }
 }

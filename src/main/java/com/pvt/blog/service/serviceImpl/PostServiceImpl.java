@@ -55,15 +55,16 @@ public class PostServiceImpl implements IPostService {
             postVO.setIsPrivate(post.getIsPrivate() == 1);
             return postVO;
         }).collect(Collectors.toList());
-        System.out.println("get all Post"+collect);
+        System.out.println("get all Post" + collect);
         return ResultResponse.success(ResultEnum.SUCCESS, collect);
     }
 
     @Override
     public ResultResponse<String> addPost(PostDTO postDTO) {
         Post post = BeanUtil.copyProperties(postDTO, Post.class);
-        post.setIsTop(postDTO.getIsTop()? 1 : 0);
+        post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
+        post.setStatus(postDTO.getStatus() ? 0 : 1);
         postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");
     }
@@ -71,7 +72,7 @@ public class PostServiceImpl implements IPostService {
     @Override
     public ResultResponse<Post> getPostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("没有该文章"));
-        System.out.println("getById:"+post.getContent());
+        System.out.println("getById:" + post.getContent());
         return ResultResponse.success(ResultEnum.SUCCESS, post);
     }
 
@@ -146,6 +147,7 @@ public class PostServiceImpl implements IPostService {
 
     /**
      * 先删除 post_column、post_tag、post_category 三张表中的数据
+     *
      * @param id
      * @return
      */

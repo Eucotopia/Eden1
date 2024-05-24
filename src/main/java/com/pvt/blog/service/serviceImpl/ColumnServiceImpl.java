@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Service
@@ -41,6 +43,11 @@ public class ColumnServiceImpl implements ColumnService {
         List<ColumnEntity> columnEntities = columnRepository.findAll();
         List<ColumnVO> columns = BeanUtil.copyToList(columnEntities, ColumnVO.class);
         return ResultResponse.success(ResultEnum.SUCCESS, columns);
+    }
+
+    @Override
+    public ResultResponse<Long> getCount() {
+        return ResultResponse.success(ResultEnum.SUCCESS, columnRepository.count());
     }
 
     @Override
