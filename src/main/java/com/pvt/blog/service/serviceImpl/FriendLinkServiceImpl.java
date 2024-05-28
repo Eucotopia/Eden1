@@ -30,4 +30,17 @@ public class FriendLinkServiceImpl implements IFriendLinkService {
         friendLinkRepository.save(friendLink);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加友链成功");
     }
+
+    @Override
+    public ResultResponse<List<FriendLink>> getRecommendFriendLinks() {
+        List<FriendLink> friendLinksByLevelEquals = friendLinkRepository.getFriendLinksByLevelEquals(1);
+        return ResultResponse.success(ResultEnum.SUCCESS, friendLinksByLevelEquals);
+    }
+
+    @Override
+    public ResultResponse<List<FriendLink>> getHighQualityFriendLinks() {
+        List<FriendLink> friendLinksByLevelEquals = friendLinkRepository.getFriendLinksByLevelEquals(2);
+        return ResultResponse.success(ResultEnum.SUCCESS, friendLinksByLevelEquals);
+    }
+
 }

@@ -27,4 +27,14 @@ public class FriendLinkController {
     public ResultResponse<String> addFriendLink(@RequestBody FriendLink friendLink) {
         return friendLinkService.addFriendLink(friendLink);
     }
+
+    @GetMapping("/recommend")
+    public ResultResponse<List<FriendLink>> getRecommendFriendLinks() {
+        return friendLinkService.getRecommendFriendLinks();
+    }
+
+    @GetMapping("/highQuality")
+    public ResultResponse<List<FriendLink>> getHighQualityFriendLinks() {
+        return friendLinkService.getHighQualityFriendLinks();
+    }
 }

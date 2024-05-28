@@ -62,6 +62,15 @@ public class FriendLink {
     private Integer status;
 
     /**
+     * 站点等级
+     * 0:普通
+     * 1:推荐
+     * 2:优质
+     */
+    @Column(name = "level")
+    private Integer level;
+
+    /**
      * 创建时间
      */
     @CreatedDate

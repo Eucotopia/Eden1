@@ -22,3 +22,4 @@ spring:
         static-path-pattern: /**
 server:
     port: 8080
+
