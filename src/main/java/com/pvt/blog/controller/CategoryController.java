@@ -28,4 +28,9 @@ public class CategoryController {
     public ResultResponse<List<Category>> getRootCategories() {
         return categoryService.getRootCategories();
     }
+
+    @GetMapping("/count")
+    public ResultResponse<Long> getCategoryCount() {
+        return categoryService.getCategoryCount();
+    }
 }

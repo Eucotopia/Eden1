@@ -13,4 +13,10 @@ import java.util.List;
 public interface ICategoryService {
     ResultResponse<List<Category>> getCategories();
     ResultResponse<List<Category>> getRootCategories();
+
+    /**
+     * get category count
+     * @return ResultResponse
+     */
+    ResultResponse<Long> getCategoryCount();
 }

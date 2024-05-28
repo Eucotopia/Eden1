@@ -27,4 +27,10 @@ public interface ITagService {
      * @return ResultResponse<String>
      */
     ResultResponse<String> addTag(List<String> tag);
+
+    /**
+     * get tag count
+     * @return ResultResponse
+     */
+    ResultResponse<Long> getTagCount();
 }

@@ -27,4 +27,9 @@ public class CategoryServiceImpl implements ICategoryService {
     public ResultResponse<List<Category>> getRootCategories() {
         return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.findCategoriesByParentIdAndIdAfter(0L, 0L));
     }
+
+    @Override
+    public ResultResponse<Long> getCategoryCount() {
+        return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.count());
+    }
 }

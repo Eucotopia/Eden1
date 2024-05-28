@@ -37,4 +37,9 @@ public class TagServiceImpl implements ITagService {
         tagRepository.saveAll(tag.stream().map(Tag::new).collect(Collectors.toList()));
         return null;
     }
+
+    @Override
+    public ResultResponse<Long> getTagCount() {
+        return ResultResponse.success(ResultEnum.SUCCESS, tagRepository.count());
+    }
 }
