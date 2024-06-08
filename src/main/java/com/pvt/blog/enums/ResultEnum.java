@@ -19,7 +19,7 @@ public enum ResultEnum {
     /**
      * 用户注册成功
      */
-    SUCCESS_USER_REGISTER(201, "用户注册成功!!!"),
+    SUCCESS_USER_REGISTER(200, "Registration successful."),
     SUCCESS_POST_ADD(202, "添加文章成功!!!"),
     /**
      * 用户名已存在
@@ -28,10 +28,10 @@ public enum ResultEnum {
     /**
      * 邮箱格式错误
      */
-    FAIL_EMAIL_FORMAT(410, "邮箱格式错误!!!"),
+    FAIL_EMAIL_FORMAT(410, "Invalid email format."),
     FAIL_TITLE_EMPTY(411, "标题为空!!!"),
     FAIL_SUMMARY_EMPTY(412, "摘要为空!!!"),
-    FAIL_USER_NOT_EXIST(413, "用户不存在!!!"),
+    FAIL_USER_NOT_EXIST(404, "User does not exist."),
     FAIL_CONTENT_EMPTY(414, "内容为空"),
     FAIL_FAQ_EMPTY(416, "问题不存在"),
     NULL_POINT_EXCEPTION(415, "空指针异常");

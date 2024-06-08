@@ -6,5 +6,5 @@ package com.pvt.blog.common;
  * @description
  */
 public class ResultConstant {
-    public static final String USER_EXIST = "用户名已存在!";
+    public static final String USER_EXIST = "Username already exists.";
 }

@@ -1,6 +1,9 @@
 package com.pvt.blog.service.serviceImpl;
 
 import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
+import com.pvt.blog.common.RoleConstant;
+import com.pvt.blog.pojo.Role;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.UserVO;
@@ -18,10 +21,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author LW
@@ -44,23 +51,30 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
+        try {
 
-        // get authentication
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                userDto.getEmail(), userDto.getPassword()));
-        // add authentication to SecurityContextHolder
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // get authentication
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    userDto.getEmail(), userDto.getPassword()));
+            // add authentication to SecurityContextHolder
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // generate authorization
-        String authorization = jwtTokenProvider.generateToken(authentication);
+            // generate authorization
+            String authorization = jwtTokenProvider.generateToken(authentication);
 
-        if (userRepository.findByEmail(authentication.getName()).isEmpty()) {
+            if (userRepository.findByEmail(authentication.getName()).isEmpty()) {
+                return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
+            }
+
+            // get user information
+            User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
+
+            redisUtil.setCacheObject("currentUser", user.getId());
+
+            return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
+        } catch (Exception e) {
             return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
         }
-        // get user information
-        User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-        redisUtil.setCacheObject("currentUser", user.getId());
-        return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
     }
 
     /*
@@ -70,23 +84,31 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public ResultResponse<String> userRegister(UserDTO user) {
-//        if (!Validator.isEmail(user.getUsername())) {
-//            // email 格式不正确
-//            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
-//        }
-//        if (userRepository.existsUserByUsername(user.getUsername())) {
-//            // 注册的用户已存在
-//            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
-//        }
-//        User newUser = new User();
-//        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-//        newUser.setEmail(user.getUsername());
-//        newUser.setUsername(user.getNickname());
-//        newUser.setMotto("来点人生箴言吧");
-//        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
-//        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
-////        newUser.setRoles(Collections.singleton(role.orElse(null)));
-//        userRepository.save(newUser);
+        if (!Validator.isEmail(user.getEmail())) {
+            // email 格式不正确
+            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+        }
+
+        if (userRepository.existsUserByEmail(user.getEmail())) {
+            // 注册的用户已存在
+            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+        }
+
+        User newUser = new User();
+
+        newUser.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+
+        newUser.setEmail(user.getEmail());
+
+        // generating a random username
+        newUser.setUsername(StrUtil.uuid());
+
+        newUser.setStatus(0);
+
+        Optional<Role> role = roleRepository.findByName(RoleConstant.GUEST);
+        // role.orElse(null):表示如果 role 为空，则返回括号中的内容，否则就返回实体
+        newUser.setRoles(Collections.singleton(role.orElse(null)));
+        userRepository.save(newUser);
         return ResultResponse.success(ResultEnum.SUCCESS_USER_REGISTER, null);
     }
 
