@@ -40,6 +40,7 @@ public class TagController {
     public ResultResponse<String> addTag(@RequestParam("tags") String[] tags) {
         return tagService.addTag(Arrays.asList(tags));
     }
+    
     @GetMapping("/count")
     public ResultResponse<Long> getTagCount() {
         return tagService.getTagCount();
