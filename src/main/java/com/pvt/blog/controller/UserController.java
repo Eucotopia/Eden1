@@ -29,7 +29,6 @@ public class UserController {
     @Resource
     private UserRepository userRepository;
 
-    // 用户登录
     @PostMapping("/login")
     public ResultResponse<UserVO> userLogin(@RequestBody UserDTO userdto) {
         return userService.userLogin(userdto);

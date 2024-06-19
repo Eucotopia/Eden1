@@ -40,12 +40,12 @@ public class User implements Serializable {
     /**
      * 邮箱
      */
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false,unique = false)
     private String email;
     /**
      * 年龄
      */
-    @Column(name = "age", nullable = false)
+    @Column(name = "age", nullable = true)
     private Integer age;
     /**
      * 密码
@@ -55,7 +55,7 @@ public class User implements Serializable {
     /**
      * 座右铭
      */
-    @Column(name = "motto", nullable = false)
+    @Column(name = "motto", nullable = true)
     private String motto;
     /**
      * 创建时间
