@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pvt.blog.pojo.Category;
 import com.pvt.blog.pojo.ColumnEntity;
 import com.pvt.blog.pojo.Tag;
+import com.pvt.blog.pojo.User;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.security.DenyAll;
 import jakarta.persistence.*;
@@ -58,6 +59,11 @@ public class PostDTO implements Serializable {
      * 用户 ID
      */
     private Integer userId;
+
+    /**
+     * 用户信息
+     */
+    private User user;
 
     /**
      * 文章状态

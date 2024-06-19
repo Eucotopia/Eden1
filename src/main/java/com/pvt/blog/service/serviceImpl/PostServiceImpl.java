@@ -6,6 +6,7 @@ import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
+import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.repository.*;
 import com.pvt.blog.service.IPostService;
@@ -167,6 +168,8 @@ public class PostServiceImpl implements IPostService {
     public ResultResponse<List<Post>> getHostPosts() {
         Pageable pageable = PageRequest.of(0, 4);
         List<Post> postsByViewsAfter = postRepository.getPostsByOrderByViewsDesc(pageable).orElseThrow(() -> new RuntimeException("没有热门文章"));
+        UserDTO userDTO = BeanUtil.copyProperties(postsByViewsAfter, UserDTO.class);
+        System.out.println(userDTO);
         return ResultResponse.success(ResultEnum.SUCCESS, postsByViewsAfter);
     }
 }

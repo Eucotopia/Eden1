@@ -40,7 +40,7 @@ public class User implements Serializable {
     /**
      * 邮箱
      */
-    @Column(name = "email", nullable = false,unique = false)
+    @Column(name = "email", nullable = false, unique = false)
     private String email;
     /**
      * 年龄
@@ -91,6 +91,7 @@ public class User implements Serializable {
                 ", address='" + address + '\'' +
                 '}';
     }
+
     /**
      * 地址
      */
