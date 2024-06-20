@@ -1,12 +1,10 @@
 package com.pvt.blog.service.serviceImpl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.pvt.blog.common.RedisConstant;
 import com.pvt.blog.enums.ResultEnum;
 import com.pvt.blog.pojo.Post;
 import com.pvt.blog.pojo.dto.PostDTO;
-import com.pvt.blog.pojo.dto.UserDTO;
 import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.repository.*;
 import com.pvt.blog.service.IPostService;
@@ -14,7 +12,6 @@ import com.pvt.blog.utils.RedisUtil;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -142,21 +139,9 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public ResultResponse<List<Post>> getRecentPosts() {
-        // 获取一周前的日期
-        Date oneWeekAgo = getDateBefore(7);
-        // 获取一个月前的日期
-        Date oneMonthAgo = getDateBefore(30);
-        // 获取一年前的日期
-        Date oneYearAgo = getDateBefore(365);
-        if (!postRepository.findPostsByCreateTimeAfter(oneWeekAgo).get().isEmpty()) {
-            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneWeekAgo).orElseThrow(() -> new RuntimeException("没有最近一周的文章文章")));
-        } else if (!postRepository.findPostsByCreateTimeAfter(oneMonthAgo).get().isEmpty()) {
-            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneMonthAgo).orElseThrow(() -> new RuntimeException("没有最近一个月文章")));
-        } else if (!postRepository.findPostsByCreateTimeAfter(oneYearAgo).get().isEmpty()) {
-            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findPostsByCreateTimeAfter(oneYearAgo).orElseThrow(() -> new RuntimeException("没有最近一年的文章")));
-        } else {
-            return ResultResponse.success(ResultEnum.SUCCESS, postRepository.findAll());
-        }
+        Pageable pageable = PageRequest.of(0, 4);
+        Optional<List<Post>> postsByOrderByCreateTimeDesc = postRepository.findPostsByOrderByCreateTimeDesc(pageable);
+        return postsByOrderByCreateTimeDesc.map(posts -> ResultResponse.success(ResultEnum.SUCCESS, posts)).orElseGet(() -> ResultResponse.error(ResultEnum.SUCCESS));
     }
 
     /**
@@ -178,11 +163,15 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
-    public ResultResponse<List<Post>> getHostPosts() {
+    public ResultResponse<List<PostDTO>> getHostPosts() {
         Pageable pageable = PageRequest.of(0, 4);
         List<Post> postsByViewsAfter = postRepository.getPostsByOrderByViewsDesc(pageable).orElseThrow(() -> new RuntimeException("没有热门文章"));
-        UserDTO userDTO = BeanUtil.copyProperties(postsByViewsAfter, UserDTO.class);
-        System.out.println(userDTO);
-        return ResultResponse.success(ResultEnum.SUCCESS, postsByViewsAfter);
+        List<PostDTO> collect = postsByViewsAfter.stream().map(post -> {
+            PostDTO postDTO = BeanUtil.copyProperties(post, PostDTO.class);
+            Optional<com.pvt.blog.pojo.User> byId = userRepository.findById(postDTO.getUserId());
+            byId.ifPresent(postDTO::setUser);
+            return postDTO;
+        }).toList();
+        return ResultResponse.success(ResultEnum.SUCCESS, collect);
     }
 }

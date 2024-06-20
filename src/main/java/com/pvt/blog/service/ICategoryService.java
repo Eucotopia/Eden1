@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public interface ICategoryService {
     ResultResponse<List<Category>> getCategories();
+
     ResultResponse<List<Category>> getRootCategories();
 
     /**
@@ -19,4 +20,10 @@ public interface ICategoryService {
      * @return ResultResponse
      */
     ResultResponse<Long> getCategoryCount();
+
+    /**
+     * get hot categories
+     * @return ResultResponse<List<Category>>
+     */
+    ResultResponse<List<Category>> getHotCategories();
 }

@@ -36,7 +36,7 @@ public interface IPostService {
      *
      * @return RResultResponse<List < Post>>
      */
-    ResultResponse<List<Post>> getHostPosts();
+    ResultResponse<List<PostDTO>> getHostPosts();
 
     /**
      * 获取相关文章

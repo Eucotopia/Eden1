@@ -33,4 +33,9 @@ public class CategoryController {
     public ResultResponse<Long> getCategoryCount() {
         return categoryService.getCategoryCount();
     }
+
+    @GetMapping("/hot")
+    public ResultResponse<List<Category>> getHotCategories() {
+        return categoryService.getHotCategories();
+    }
 }

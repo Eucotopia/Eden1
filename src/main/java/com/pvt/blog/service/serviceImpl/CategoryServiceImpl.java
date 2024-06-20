@@ -8,7 +8,10 @@ import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 /**
  * @author LIWEI
@@ -31,5 +34,18 @@ public class CategoryServiceImpl implements ICategoryService {
     @Override
     public ResultResponse<Long> getCategoryCount() {
         return ResultResponse.success(ResultEnum.SUCCESS, categoryRepository.count());
+    }
+
+    @Override
+    public ResultResponse<List<Category>> getHotCategories() {
+        // 获取所有类别
+        List<Category> categoryList = categoryRepository.findAll();
+        // 按照文章数量对类别进行排序，并获取前五个
+        List<Category> topFiveCategories = categoryList.stream()
+                .sorted(Comparator.comparingInt((Category category) -> category.getPosts().size()).reversed())
+                .limit(4)
+                .collect(Collectors.toList());
+
+        return ResultResponse.success(ResultEnum.SUCCESS, topFiveCategories);
     }
 }

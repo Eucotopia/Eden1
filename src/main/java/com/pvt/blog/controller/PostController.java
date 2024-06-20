@@ -7,6 +7,7 @@ import com.pvt.blog.pojo.dto.PostDTO;
 import com.pvt.blog.pojo.vo.PostVO;
 import com.pvt.blog.repository.PostRepository;
 import com.pvt.blog.service.IPostService;
+import com.pvt.blog.service.IUserService;
 import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
@@ -27,6 +28,7 @@ public class PostController {
     private IPostService postService;
     @Resource
     private PostRepository postRepository;
+
 
     @GetMapping
     public ResultResponse<List<PostVO>> getPosts() {
@@ -109,7 +111,7 @@ public class PostController {
      * @return ResultResponse<List < Post>>
      */
     @GetMapping("/hot")
-    public ResultResponse<List<Post>> getHotPosts() {
+    public ResultResponse<List<PostDTO>> getHotPosts() {
         return postService.getHostPosts();
     }
 

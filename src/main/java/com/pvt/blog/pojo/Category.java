@@ -37,6 +37,6 @@ public class Category implements Serializable {
      * 文章
      */
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "categories")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Post.class, mappedBy = "categories")
     private Set<Post> posts;
 }
