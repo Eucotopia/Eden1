@@ -32,12 +32,14 @@ public class RedisUtil {
 
     /**
      * 获取指定 key 的值
+     *
      * @param key
      * @return
      */
     public Object get(String key) {
-        return  redisTemplate.opsForValue().get(key);
+        return redisTemplate.opsForValue().get(key);
     }
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -87,6 +89,24 @@ public class RedisUtil {
         }
     }
 
+    /**
+     * increase integer value
+     * @param key key
+     * @return true | false
+     */
+    public Boolean increaseValue(String key) {
+        try {
+            if (this.hasKey(key)) {
+                Integer value = (Integer) this.get(key);
+                setCacheObject(key, value + 1);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * 删除单个对象

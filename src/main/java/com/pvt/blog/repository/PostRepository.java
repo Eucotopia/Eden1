@@ -43,6 +43,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
      */
     Optional<List<Post>> getPostsByOrderByViewsDesc(Pageable pageable);
 
+
     List<Post> findByCategoriesInAndIdNot(Set<Category> categories, Long id);
 
     Optional<List<Post>> findPostsByCreateTimeAfter(Date date);

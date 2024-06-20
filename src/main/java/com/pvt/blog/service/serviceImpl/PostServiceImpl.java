@@ -66,14 +66,27 @@ public class PostServiceImpl implements IPostService {
         post.setIsTop(postDTO.getIsTop() ? 1 : 0);
         post.setIsPrivate(postDTO.getIsPrivate() ? 1 : 0);
         post.setStatus(postDTO.getStatus() ? 0 : 1);
+        post.setViews(0);
+        post.setComments(0);
+        post.setLikes(0);
         postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, "添加文章成功");
     }
 
     @Override
     public ResultResponse<Post> getPostById(Long id) {
+        // get post by id
         Post post = postRepository.findById(id).orElseThrow(() -> new RuntimeException("没有该文章"));
-        System.out.println("getById:" + post.getContent());
+        // view key
+        String viewKey = RedisConstant.POST_VIEW + id;
+
+        if (redisUtil.hasKey(viewKey)) {
+            redisUtil.increaseValue(viewKey);
+        } else {
+            redisUtil.setCacheObject(viewKey, 1);
+        }
+        post.setViews(post.getViews() + 1);
+        postRepository.saveAndFlush(post);
         return ResultResponse.success(ResultEnum.SUCCESS, post);
     }
 

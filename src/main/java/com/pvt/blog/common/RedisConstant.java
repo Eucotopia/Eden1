@@ -9,4 +9,7 @@ public class RedisConstant {
 
     // 博客 key
     public static final String BLOG_KEY = "blog:like:";
+
+    // view key
+    public static final String POST_VIEW = "post:view:";
 }
