@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * @description 自定义 UserDetailsService
  */
 @Service
-@Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
     @Resource
     private UserRepository userRepository;

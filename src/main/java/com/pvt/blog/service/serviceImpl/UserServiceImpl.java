@@ -3,6 +3,7 @@ package com.pvt.blog.service.serviceImpl;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
 import com.pvt.blog.common.RoleConstant;
+import com.pvt.blog.filter.CustomWebAuthenticationDetails;
 import com.pvt.blog.pojo.Role;
 import com.pvt.blog.pojo.User;
 import com.pvt.blog.pojo.dto.UserDTO;
@@ -24,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -56,6 +58,7 @@ public class UserServiceImpl implements IUserService {
             // get authentication
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     userDto.getEmail(), userDto.getPassword()));
+
             // add authentication to SecurityContextHolder
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
