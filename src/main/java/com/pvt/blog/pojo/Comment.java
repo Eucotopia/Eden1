@@ -45,6 +45,9 @@ public class Comment {
     @Column(name = "post_id")
     private Integer postId;
 
+    @Column(name = "title")
+    private String title;
+
     @Column(name = "parent_id")
     private String parent_id;
 }
