@@ -27,10 +27,14 @@ public class SecurityAuditorAware implements AuditorAware<Integer> {
         if (authentication == null || !authentication.isAuthenticated()) {
             return Optional.empty();
         }
-
         // 获取当前登录用户信息
-        CustomWebAuthenticationDetails details = (CustomWebAuthenticationDetails) authentication.getDetails();
+        Object details = authentication.getDetails();
 
-        return Optional.of(details.getId());
+        if (details instanceof CustomWebAuthenticationDetails customDetails) {
+            return Optional.of(customDetails.getId());
+        }
+
+        return Optional.empty();
     }
+
 }

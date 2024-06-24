@@ -54,10 +54,16 @@ public class UserServiceImpl implements IUserService {
     @Override
     public ResultResponse<UserVO> userLogin(UserDTO userDto) {
         try {
+            // valid email
+            if (!Validator.isEmail(userDto.getEmail())) {
+                return ResultResponse.error(ResultEnum.FAIL_EMAIL_FORMAT);
+            }
+
+            // get user information
+            User user = userRepository.findByEmail(userDto.getEmail()).orElseThrow(() -> new RuntimeException(ResultEnum.FAIL_USER_NOT_EXIST.getMessage()));
 
             // get authentication
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    userDto.getEmail(), userDto.getPassword()));
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), userDto.getPassword()));
 
             // add authentication to SecurityContextHolder
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -65,16 +71,8 @@ public class UserServiceImpl implements IUserService {
             // generate authorization
             String authorization = jwtTokenProvider.generateToken(authentication);
 
-            if (userRepository.findByEmail(authentication.getName()).isEmpty()) {
-                return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
-            }
-
-            // get user information
-            User user = userRepository.findByEmail(authentication.getName()).orElseThrow(() -> new RuntimeException("用户不存在"));
-
-            redisUtil.setCacheObject("currentUser", user.getId());
-
             return ResultResponse.success(ResultEnum.SUCCESS, new UserVO(user.getUsername(), user.getEmail(), authorization, user.getAvatar()));
+
         } catch (Exception e) {
             return ResultResponse.error(ResultEnum.FAIL_USER_NOT_EXIST);
         }
@@ -89,12 +87,12 @@ public class UserServiceImpl implements IUserService {
     public ResultResponse<String> userRegister(UserDTO user) {
         if (!Validator.isEmail(user.getEmail())) {
             // email 格式不正确
-            return new ResultResponse<>(ResultEnum.FAIL_EMAIL_FORMAT);
+            return ResultResponse.error(ResultEnum.FAIL_EMAIL_FORMAT);
         }
 
         if (userRepository.existsUserByEmail(user.getEmail())) {
             // 注册的用户已存在
-            return new ResultResponse<>(ResultEnum.FAIL_USER_EXIST);
+            return ResultResponse.error(ResultEnum.FAIL_USER_EXIST);
         }
 
         User newUser = new User();

@@ -1,5 +1,6 @@
 package com.pvt.blog.config;
 
+import com.pvt.blog.aspect.CustomAccessDeniedHandler;
 import com.pvt.blog.filter.JwtAuthenticationFilter;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -30,10 +31,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    //    @Resource
-//    private CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Resource
     private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Resource
+    private CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -62,7 +65,9 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                             .requestMatchers(HttpMethod.POST, "/user").permitAll()
                             .anyRequest().permitAll();
-                });
+                })
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

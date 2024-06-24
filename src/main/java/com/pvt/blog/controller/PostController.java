@@ -12,6 +12,7 @@ import com.pvt.blog.utils.ResultResponse;
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,7 +61,7 @@ public class PostController {
      * @return ResultResponse<String>
      */
     @PostMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResultResponse<String> addPost(@RequestBody PostDTO postDTO) {
         return postService.addPost(postDTO);
     }
