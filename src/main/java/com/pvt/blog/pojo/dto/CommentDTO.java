@@ -17,5 +17,7 @@ public class CommentDTO {
 
     private String parentId;
 
+    private Integer rating;
+
     private String title;
 }
