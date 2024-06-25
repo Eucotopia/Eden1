@@ -13,4 +13,5 @@ public class ResultConstant {
     public static final String FAIL_NO_USER_PERMISSION = "Access Denied: You do not have permission to perform this action.";
     public static final String SUCCESS_USER_REGISTER = "Registration successful.";
     public static final String SUCCESS_POST_ADD = "Post added successfully.";
+    public static final String FAIL_NO_LOGIN = "Access Denied: You are not logged in.";
 }

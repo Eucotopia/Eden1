@@ -17,7 +17,8 @@ public enum ResultEnum {
     FAIL_USER_NOT_EXIST(404, ResultConstant.USER_NOT_EXIST),
     FAIL_CONTENT_EMPTY(414, ResultConstant.CONTENT_EMPTY),
     FAIL_FAQ_EMPTY(416, ResultConstant.FAQ_EMPTY),
-    NULL_POINT_EXCEPTION(415, ResultConstant.NULL_POINTER_EXCEPTION);
+    NULL_POINT_EXCEPTION(415, ResultConstant.NULL_POINTER_EXCEPTION),
+    FAIL_NO_LOGIN(401, ResultConstant.FAIL_NO_LOGIN);
 
     private final Integer code;
     private final String message;

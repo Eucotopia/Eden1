@@ -15,6 +15,7 @@ import java.util.Date;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -37,17 +38,31 @@ public class Comment {
     @Column(name = "likes")
     private Integer likes;
 
+    @Column(name = "rating")
+    private Integer rating;
+
+    /**
+     * user id
+     */
     @CreatedBy
     @LastModifiedBy
     @Column(name = "user_id")
     private Integer userId;
-
+    /**
+     * post id
+     */
     @Column(name = "post_id")
     private Integer postId;
 
+    /**
+     * title
+     */
     @Column(name = "title")
     private String title;
 
+    /**
+     * parent ID
+     */
     @Column(name = "parent_id")
-    private String parent_id;
+    private String parentId;
 }

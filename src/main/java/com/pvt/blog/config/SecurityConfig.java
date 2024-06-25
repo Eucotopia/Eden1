@@ -1,12 +1,12 @@
 package com.pvt.blog.config;
 
-import com.pvt.blog.aspect.CustomAccessDeniedHandler;
+import com.pvt.blog.filter.CustomAccessDeniedHandler;
+import com.pvt.blog.filter.CustomAuthenticationEntryPoint;
 import com.pvt.blog.filter.JwtAuthenticationFilter;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -24,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
  * @author LW
  * @date 2023/7/14
- * @description
+ * @description Security configuration for the application
  */
 @Configuration
 @EnableJpaAuditing
@@ -44,8 +43,7 @@ public class SecurityConfig {
     }
 
     @Resource
-    public RedisConnectionFactory redisConnectionFactory;
-
+    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -66,9 +64,14 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/user").permitAll()
                             .anyRequest().permitAll();
                 })
-                .exceptionHandling(exceptionHandling ->
-                        exceptionHandling.accessDeniedHandler(customAccessDeniedHandler));
+                .exceptionHandling(exceptionHandling -> {
+                    exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint);
+                    exceptionHandling.accessDeniedHandler(customAccessDeniedHandler);
+                })
+        ;
+
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
 

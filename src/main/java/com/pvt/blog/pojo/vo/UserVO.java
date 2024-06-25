@@ -2,6 +2,7 @@ package com.pvt.blog.pojo.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import java.util.UUID;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserVO {
 
     /**
@@ -28,5 +30,5 @@ public class UserVO {
     /**
      * 用户头像
      */
-    private String cover;
+    private String avatar;
 }
